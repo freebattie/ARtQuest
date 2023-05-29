@@ -1,0 +1,2 @@
+# This rule tells Git to automatically detect text files and perform line ending normalization.
+* text=auto
