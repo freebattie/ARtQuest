@@ -1,37 +1,10 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
-import Login from "./Pages/Login";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./Pages/Home";
 
-const Stack = createNativeStackNavigator();
+import Navigation from './components/navigation';
+
 export default function App() {
-  const options = {
-    headerStyle: {
-      backgroundColor: "darkgreen",
-      color: "white",
-    },
-    headerTitleStyle: {
-      color: "#fff",
-    },
-    headerTintColor: "#fff", // set the back button arrow color to white
-  };
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} options={options} />
-        <Stack.Screen name="Home" component={Home} options={options} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <>
+            <Navigation />
+        </>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
