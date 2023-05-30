@@ -12,7 +12,7 @@ import { Appcontext } from "../lib/AppContext";
 export default function Login({ navigation }) {
   const [userName, setUserName] = useState("");
   const [password, sePassword] = useState("");
-  const { login } = useContext(Appcontext);
+  const { login, } = useContext(Appcontext);
   const handelLogin = async () => {
     try {
       await login({ userName, password });
@@ -21,6 +21,12 @@ export default function Login({ navigation }) {
       console.log("handelLogin", error);
     }
   };
+
+  // Route to SignUp screen
+  const handleCreateUser = () => {
+    navigation.navigate("SignUp");
+  }
+
   return (
     <View style={styles.container}>
       <Text>Insert any text in below input</Text>
@@ -38,7 +44,7 @@ export default function Login({ navigation }) {
         style={styles.input}
       />
       <Button title="login" onPress={() => handelLogin()} />
-      <Button title="create" />
+      <Button title="create" onPress={() => handleCreateUser()} />
     </View>
   );
 }
