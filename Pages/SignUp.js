@@ -15,9 +15,7 @@ import {
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
 export default function SignUp({ navigation }) {
-    const [email, setEmail] = useState("");
     const [isValidEmail, setIsValidEmail] = useState(false);
-    const [fullName, setFullName] = useState("");
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +23,7 @@ export default function SignUp({ navigation }) {
     const { login,createUser } = useContext(Appcontext);
 
     const onPressSubmitHandler = () => {
-        createUser({email,fullName,userName,password})
+        createUser({userName,password})
     }
 
     const onPressToggleHandler = () => {
@@ -35,7 +33,7 @@ export default function SignUp({ navigation }) {
     const onChangeEmailHandler = (currentTarget) => {
         const pattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
         const match = pattern.test(currentTarget);
-        setEmail(currentTarget);
+        setUserName(currentTarget);
         setIsValidEmail(match);
     }
 
@@ -45,20 +43,8 @@ export default function SignUp({ navigation }) {
                 <TextInput
                     placeholder='Email'
                     style={{...styles.input, borderColor: isValidEmail ? 'green' : '#ccc'}}
-                    value={email}
-                    onChangeText={onChangeEmailHandler}
-                />
-                <TextInput
-                    placeholder='Full Name'
-                    style={styles.input}
-                    value={fullName}
-                    onChangeText={(val) => setFullName(val)}
-                />
-                <TextInput
-                    placeholder='Username'
-                    style={styles.input}
                     value={userName}
-                    onChangeText={(val) => setUserName(val)}
+                    onChangeText={onChangeEmailHandler}
                 />
                 <TextInput
                     placeholder='Password'
