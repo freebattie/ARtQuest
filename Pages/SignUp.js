@@ -1,3 +1,10 @@
+////////////////////////////////////////////////////////////////
+//  Description: Security Patch 
+//  Version: 1.0
+//  Author: Jack
+//  co-Author: userhonest
+///////////////////////////////////////////////////////////////
+
 import React, { useState, useEffect, useContext } from "react";
 import { Appcontext } from "../lib/AppContext";
 import {
@@ -21,11 +28,15 @@ export default function SignUp({ navigation }) {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    
+    // check to add extra chars on the regex to see
+    // if passowrd is strong enough...
+    const [isStrongPassword, setIsStrongPassword] = useState(false);
 
-    const { login,createUser } = useContext(Appcontext);
+    const { login, createUser } = useContext(Appcontext);
 
     const onPressSubmitHandler = () => {
-        createUser({email,fullName,userName,password})
+        createUser({ email, fullName, userName, password })
     }
 
     const onPressToggleHandler = () => {
@@ -39,12 +50,21 @@ export default function SignUp({ navigation }) {
         setIsValidEmail(match);
     }
 
+    const onChangePasswordHandler = (currentPassword) => {
+     
+    const pattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    const isStrong = pattern.test(currentPassword);
+    setPassword(currentPassword);
+    setIsStrongPassword(isStrong);
+    }
+
     return (
         <View style={styles.container}>
             <View>
                 <TextInput
                     placeholder='Email'
-                    style={{...styles.input, borderColor: isValidEmail ? 'green' : '#ccc'}}
+                    style={{ ...styles.input, borderColor: isValidEmail ? 'green' : '#ccc' }}
                     value={email}
                     onChangeText={onChangeEmailHandler}
                 />
@@ -62,11 +82,14 @@ export default function SignUp({ navigation }) {
                 />
                 <TextInput
                     placeholder='Password'
-                    style={styles.input}
+                    style={{...styles.input, borderColor: isS
+                ? 'green' : '#ccc'}}
                     value={password}
-                    onChangeText={(val) => setPassword(val)}
+                    onChangeText={onChangePasswordHandler}
                     secureTextEntry={!showPassword}
                 />
+
+
                 <Button
                     title={showPassword ? 'Hide' : 'Show'}
                     onPress={() => onPressToggleHandler()}
@@ -98,3 +121,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
+
+//////end of file ////////////////////////////////////////////
