@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import Navigation from './components/navigation';
 import { StyleSheet } from "react-native";
 import Login from "./Pages/Login";
 import { NavigationContainer } from "@react-navigation/native";
