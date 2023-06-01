@@ -1,23 +1,31 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import {
+    Button,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Image,
+} from 'react-native';
 
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
+    const [prevItem, setPrevItem] = useState("");
     const [allItemsFromAssets, doNotUse] = useState([
         {
             src: require('../assets/images/rocks.png'),
-            name:"rocks"
+            name: 'rocks',
         },
         {
             src: require('../assets/images/cheese.png'),
-            name:"cheese"
+            name: 'cheese',
         },
         {
             src: require('../assets/images/scream.png'),
-            name:"scream"
+            name: 'scream',
         },
     ]);
 
@@ -39,6 +47,10 @@ export default function CameraScreen() {
         // TODO: Modal or alert?
         //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
         setActiveItem(data);
+
+        if (activeItem != prevItem) {
+            setPrevItem(activeItem);
+        }
         console.log(data);
     };
 
@@ -51,27 +63,42 @@ export default function CameraScreen() {
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
     }
-    
 
     ////////////////////////////////////////////////////
     // Returning the current scanned image require ID
     ////////////////////////////////////////////////////
-    const scannedImage = allItemsFromAssets.find(item => item.name == activeItem).src
+    const scannedImage = allItemsFromAssets.find(
+        (item) => item.name == activeItem
+    );
+    console.log(scannedImage);
+    console.log(prevItem);
+    console.log(activeItem);
     return (
         <View style={styles.container}>
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
             />
-            {scanned && (
-                <TouchableOpacity onPress={() => setScanned(false)} style={styles.itemContainer} >
-                    {/* require does not work with dynamic import */}
-                    <Image 
-                        source={ scannedImage }
-                        style={{width: 150, height: 150}}
-                    />
+
+            { prevItem != activeItem ? scanned && (
+                <TouchableOpacity
+                    onPress={() => setScanned(false)}
+                    style={styles.itemContainer}
+                >
+                    { activeItem != "N/A" &&
+                        <Image
+                        source={scannedImage['src']}
+                        style={{ width: 150, height: 150 }}
+                        />
+                    }
                 </TouchableOpacity>
-            )}
+            ) : scanned ? (
+                <Button title={"OK GOT IT!!"}onPress={() => {
+                    setPrevItem("")
+                    setActiveItem("N/A");
+                    setScanned(false);
+                }}></Button>
+            ) : <></>}
         </View>
     );
 }
@@ -90,5 +117,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         width: '50%',
         height: '50%',
-    }
+    },
 });
