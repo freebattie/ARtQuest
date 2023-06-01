@@ -27,6 +27,10 @@ export default function Login({ navigation }) {
     navigation.navigate("SignUp");
   }
 
+  const handleOpenCamera = () => {
+    navigation.navigate("Camera");
+  }
+
   return (
     <View style={styles.container}>
       <Text>Insert any text in below input</Text>
@@ -45,6 +49,7 @@ export default function Login({ navigation }) {
       />
       <Button title="login" onPress={() => handelLogin()} />
       <Button title="create" onPress={() => handleCreateUser()} />
+      <Button title="camera" onPress={() => handleOpenCamera()} />
     </View>
   );
 }
