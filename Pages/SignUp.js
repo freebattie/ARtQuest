@@ -18,13 +18,12 @@ import {
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
 export default function SignUp({ navigation }) {
-
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordTooShort, setPasswordTooShort] = useState(false);
     const [isValidEmail, setIsValidEmail] = useState(false);
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState('');
     const [emailContainsAT, setEmailContainsAT] = useState(false);
 
     // check to add extra chars on the regex to see
@@ -37,6 +36,7 @@ export default function SignUp({ navigation }) {
     const onPressSubmitHandler = () => {
         // TODO read response for status code
         createUser({ email, userName, password });
+        navigation.navigate('Login');
     };
 
     const onPressToggleHandler = () => {
@@ -44,30 +44,26 @@ export default function SignUp({ navigation }) {
     };
 
     const onChangeEmailHandler = (currentEmail) => {
-
         try {
             const pattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
             const match = pattern.test(currentEmail);
-            console.log("math is ", match);
+            console.log('math is ', match);
             setEmail(currentEmail);
             setIsValidEmail(match);
-            setEmailContainsAT(currentEmail.includes("@"));
+            setEmailContainsAT(currentEmail.includes('@'));
         } catch (error) {
             console.log(error);
         }
-
-
     };
 
     const onChangePasswordHandler = (currentPassword) => {
-        console.log("test");
+        console.log('test');
         const pattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
         const isStrong = pattern.test(currentPassword);
         setPassword(currentPassword);
         setIsStrongPassword(isStrong);
         setPasswordTooShort(currentPassword.length < 10); //<- check to user, to add less than a certain amount of characters.
-
     };
 
     return (
@@ -104,8 +100,6 @@ export default function SignUp({ navigation }) {
                         Password should be at least 10 characters long.
                     </Text>
                 )}
-
-
 
                 <Button
                     title={showPassword ? 'Hide' : 'Show'}
