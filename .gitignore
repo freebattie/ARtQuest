@@ -19,3 +19,4 @@ web-build/
 # Diagnostic report folder
 report/
 .vscode/
+lib/envFile.js
