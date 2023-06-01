@@ -8,12 +8,16 @@ import {
     View,
     Image,
 } from 'react-native';
+import { Appcontext } from '../lib/AppContext';
 
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
-    const [prevItem, setPrevItem] = useState("");
+    const [prevItem, setPrevItem] = useState('');
+    const { sendItem } = useContext(Appcontext);
+    const [quests, setQuests] = useState({});
+
     const [allItemsFromAssets, doNotUse] = useState([
         {
             src: require('../assets/images/rocks.png'),
@@ -42,16 +46,51 @@ export default function CameraScreen() {
     ////////////////////////////////
     // Handling user event
     ////////////////////////////////
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
         // TODO: Modal or alert?
         //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
-        setActiveItem(data);
+        const foundObject = await JSON.parse(data);
+        const serverData = {};
+        const currentQuests = { ...quests };
+        if (!currentQuests.has(foundObject.name)) {
+            setActiveItem(foundObject.name);
+            currentQuests.set(activeItem, {
+                collected: [foundObject.item],
+                quest: foundObject.quest,
+            });
+            try {
+                serverData = await sendItem({
+                    quest: foundObject.quest,
+                    item: foundObject.item,
+                });
+            } catch (error) {
+                console.log(error);
+            }
 
-        if (activeItem != prevItem) {
+            console.log('data is', serverData);
+            const tempQuest = currentQuests.get(activeItem);
+            tempQuest.collected = serverData.collected;
+            currentQuests.set(activeItem);
+            setQuests;
             setPrevItem(activeItem);
+        } else {
+            console.log('here');
+            setActiveItem(foundObject.name);
+            const quest = currentQuests.get(activeItem);
+            console.log('quest ', quest);
+            const found = quest.collected.find(
+                (item) => item == foundObject.item
+            );
+            console.log('found is', found);
+            if (found) {
+                setActiveItem(foundObject.name);
+                setPrevItem(activeItem);
+            }
         }
-        console.log(data);
+
+        setPrevItem(activeItem);
+        console.log(serverData);
     };
 
     ////////////////////////////////
@@ -80,24 +119,32 @@ export default function CameraScreen() {
                 style={StyleSheet.absoluteFillObject}
             />
 
-            {scanned &&
-                <TouchableOpacity
-                    onPress={() => setScanned(false)}
-                >
-                    {prevItem != activeItem ?
-                        <Image
-                            source={scannedImage['src']}
-                            style={{ width: 150, height: 150 }}
-                        /> :
-                        <View>
-                            <Button
-                                title='OK'
-                                onPress={() => setScanned(false)}
+            {prevItem != activeItem ? (
+                scanned && (
+                    <TouchableOpacity
+                        onPress={() => setScanned(false)}
+                        style={styles.itemContainer}
+                    >
+                        {activeItem != 'N/A' && (
+                            <Image
+                                source={scannedImage['src']}
+                                style={{ width: 150, height: 150 }}
                             />
-                        </View>
-                    }
-                </TouchableOpacity>
-            }
+                        )}
+                    </TouchableOpacity>
+                )
+            ) : scanned ? (
+                <Button
+                    title={'OK GOT IT!!'}
+                    onPress={() => {
+                        setPrevItem('');
+                        setActiveItem('N/A');
+                        setScanned(false);
+                    }}
+                ></Button>
+            ) : (
+                <></>
+            )}
         </View>
     );
 }
