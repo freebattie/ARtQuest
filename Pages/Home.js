@@ -10,7 +10,7 @@ import {
 
 export default function Home() {
   const [userName, setUserName] = useState("");
-  const [password, sePassword] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <View style={styles.container}>
       <Text>You are Logged in</Text>

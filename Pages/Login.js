@@ -11,7 +11,7 @@ import {
 import { Appcontext } from "../lib/AppContext";
 export default function Login({ navigation }) {
   const [userName, setUserName] = useState("");
-  const [password, sePassword] = useState("");
+  const [password, setPassword] = useState("");
   const { login, } = useContext(Appcontext);
   const handelLogin = async () => {
     try {
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
       <Text>Insert any text in below input</Text>
       <TextInput
         value={password}
-        onChangeText={(password) => sePassword(password)}
+        onChangeText={(password) => setPassword(password)}
         placeholder={"Password"}
         style={styles.input}
       />
