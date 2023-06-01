@@ -1,5 +1,6 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect } from 'react';
+
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
@@ -37,6 +38,7 @@ export default function CameraScreen() {
     }
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
+
     }
 
     return (
@@ -59,3 +61,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+            
+   
+
+
+
+
