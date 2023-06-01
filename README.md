@@ -1,7 +1,7 @@
 # ARtQuest
 1. run "npx expo install" in folder
 2. run "npx expo update"
-3. rename envFile(TEMPLATE).js til envFile.js.
+3. copy envFile(TEMPLATE).js and rename envFile.js.
 4. Gå inn i envFile å endre IP til din private ip adresse, endre PORT til din port
 6. hvis du kjører med annen port en 3033 på server så må du endre port på BASE_URL
 7. npx expo start
