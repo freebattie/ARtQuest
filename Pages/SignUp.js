@@ -18,11 +18,14 @@ import {
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
 export default function SignUp({ navigation }) {
-    const [isValidEmail, setIsValidEmail] = useState(false);
+
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordTooShort, setPasswordTooShort] = useState(false);
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [email, setEmail] = useState("");
+    const [emailContainsAT, setEmailContainsAT] = useState(false);
 
     // check to add extra chars on the regex to see
     // if password is strong enough...
@@ -32,27 +35,37 @@ export default function SignUp({ navigation }) {
 
     const onPressSubmitHandler = () => {
         // TODO read response for status code
-        createUser({ userName, password });
+        createUser({ email, userName, password });
     };
 
     const onPressToggleHandler = () => {
         setShowPassword((prevState) => !prevState);
     };
 
-    const onChangeEmailHandler = (currentTarget) => {
-        const pattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-        const match = pattern.test(currentTarget);
-        setUserName(currentTarget);
-        setIsValidEmail(match);
+    const onChangeEmailHandler = (currentEmail) => {
+
+        try {
+            const pattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+            const match = pattern.test(currentEmail);
+            console.log("math is ", match);
+            setEmail(currentEmail);
+            setIsValidEmail(match);
+            setEmailContainsAT(currentEmail.includes("@"));
+        } catch (error) {
+            console.log(error);
+        }
+
+
     };
 
     const onChangePasswordHandler = (currentPassword) => {
+        console.log("test");
         const pattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
         const isStrong = pattern.test(currentPassword);
         setPassword(currentPassword);
         setIsStrongPassword(isStrong);
-        setPasswordTooShort(currentPassword.length < 10); 
+        setPasswordTooShort(currentPassword.length < 10); //<- check to user, to add less than a certain amount of characters.
 
     };
 
@@ -65,9 +78,15 @@ export default function SignUp({ navigation }) {
                         ...styles.input,
                         borderColor: isValidEmail ? 'green' : '#ccc',
                     }}
-                    value={userName}
+                    value={email}
                     onChangeText={onChangeEmailHandler}
                 />
+                {!emailContainsAT && (
+                    <Text style={{ color: 'red' }}>
+                        Email should contain '@'.
+                    </Text>
+                )}
+
                 <TextInput
                     placeholder="Password"
                     style={{
@@ -78,13 +97,13 @@ export default function SignUp({ navigation }) {
                     onChangeText={onChangePasswordHandler}
                     secureTextEntry={!showPassword}
                 />
-               
+
                 {passwordTooShort && (
-                <Text style={{ color: 'red' }}>
-                    Password should be at least 10 characters long.
-                </Text>
+                    <Text style={{ color: 'red' }}>
+                        Password should be at least 10 characters long.
+                    </Text>
                 )}
-               
+
 
 
                 <Button
