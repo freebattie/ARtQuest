@@ -22,9 +22,10 @@ export default function SignUp({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [passwordTooShort, setPasswordTooShort] = useState(false);
 
     // check to add extra chars on the regex to see
-    // if passowrd is strong enough...
+    // if password is strong enough...
     const [isStrongPassword, setIsStrongPassword] = useState(false);
 
     const { login, createUser } = useContext(Appcontext);
@@ -51,6 +52,8 @@ export default function SignUp({ navigation }) {
         const isStrong = pattern.test(currentPassword);
         setPassword(currentPassword);
         setIsStrongPassword(isStrong);
+        setPasswordTooShort(currentPassword.length < 10); 
+
     };
 
     return (
@@ -75,6 +78,15 @@ export default function SignUp({ navigation }) {
                     onChangeText={onChangePasswordHandler}
                     secureTextEntry={!showPassword}
                 />
+               
+                {passwordTooShort && (
+                <Text style={{ color: 'red' }}>
+                    Password should be at least 10 characters long.
+                </Text>
+                )}
+               
+
+
                 <Button
                     title={showPassword ? 'Hide' : 'Show'}
                     onPress={() => onPressToggleHandler()}
