@@ -29,6 +29,7 @@ export default function SignUp({ navigation }) {
 
     // check to add extra chars on the regex to see
     // if password is strong enough...
+    // if password is strong enough...
     const [isStrongPassword, setIsStrongPassword] = useState(false);
 
     const { login, createUser } = useContext(Appcontext);
