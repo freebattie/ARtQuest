@@ -1,73 +1,61 @@
-import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 
 
 
-
 export default function CameraScreen() {
-    const [type, setType] = useState(CameraType.back);
-    const [permission, setPermission] = Camera.useCameraPermissions();
+    const [hasPermission, setHasPermission] = useState(null);
+    const [scanned, setScanned] = useState(false);
 
-    if (!permission) return <></>;
+    useEffect(() => {
+        // Getting permission from user
+        const getBarCodeScannerPermissions = async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status === 'granted');
+        };
+        // Side effect
+        getBarCodeScannerPermissions();
+    }, []);
 
-    if (!permission.granted) {
-        return (
-            <View>
-                <Text>Grant ARtQuest access to your camera</Text>
-                <Button title='grant' onPress={setPermission} />
-            </View>
-        )
+    ////////////////////////////////
+    // Handling user event
+    ////////////////////////////////
+    const handleBarCodeScanned = ({ type, data }) => {
+        setScanned(true);
+        // TODO: Modal or alert?
+        alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
     };
 
-    const toggleCameraType = () => {
-        setType(current => (
-            current === CameraType.back ? CameraType.front : CameraType.back
-        ));
+    ////////////////////////////////
+    // Conditional rendering
+    ////////////////////////////////
+    if (hasPermission === null) {
+        return <Text>ARtQuest is asking for camera permission</Text>;
+    }
+    if (hasPermission === false) {
+        return <Text>Permission denied</Text>;
     }
 
     return (
         <View style={styles.container}>
-            <Camera
-                style={styles.camera}
-                type={type} ratio="16:9"
+            <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={StyleSheet.absoluteFillObject}
             />
-            <View>
-                <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-                    <Text style={styles.text}>Flip</Text>
-                </TouchableOpacity>
-            </View>
+            {scanned && (
+                <Button title={'Scan'} onPress={() => setScanned(false)} />
+            )}
         </View>
-    )
+    );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-    },
-    camera: {
-        flex: 1,
-        height: '100%',
-    },
-    buttonContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'transparent',
-        margin: 64,
-    },
-    button: {
-        flex: 1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'white',
     },
 });
