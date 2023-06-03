@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
     const handleLogin = async () => {
         try {
             await login({ userName, password });
-            navigation.navigate('Camera');
+            navigation.navigate('Home');
         } catch (error) {
             console.log('handelLogin', error);
         }
