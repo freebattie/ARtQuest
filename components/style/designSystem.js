@@ -63,5 +63,17 @@ export default function designSystem() {
         headerTintColor: "#fff", // set the back button arrow color to white
     };
 
-    return { COLOR, PRIMARY, STACK_NAV_HEADER };
+    const INPUT_FORM = StyleSheet.create({
+        input: {
+            width: '50%',
+            height: 40,
+            borderColor: '#ccc',
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingHorizontal: 10,
+            marginBottom: 10
+        }
+    })
+
+    return { COLOR, PRIMARY, STACK_NAV_HEADER, INPUT_FORM };
 }

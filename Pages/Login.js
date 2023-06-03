@@ -7,9 +7,10 @@ import {
     SafeAreaView,
     Button,
 } from 'react-native';
-import designSystem from '../components/style/designSystem';
+import designSystem from '../components/style/DesignSystem';
 
 import { Appcontext } from '../lib/AppContext';
+import CustomButton from '../components/style/CustomButton';
 export default function Login({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -49,7 +50,8 @@ export default function Login({ navigation }) {
                 placeholder={'Password'}
                 style={styles.input}
             />
-            <Button title="login" onPress={() => handelLogin()} />
+            <CustomButton title={'Login'} onPress={() => alert('clicked')} />
+            <Button style={styles.button} title="login" onPress={() => handelLogin()} />
             <Button title="create" onPress={() => handleCreateUser()} />
             <Button title="camera" onPress={() => handleOpenCamera()} />
         </View>
@@ -63,12 +65,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        width: '100%',
+        width: '70%',
         height: 40,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 5,
+        borderColor: 'rgba(50,50,50,1)',
+        borderWidth: 1.5,
+        borderRadius: 2,
         paddingHorizontal: 10,
         marginBottom: 10,
     },
+    button: {
+        color: 'rgba(255,255,255)',
+    }
 });

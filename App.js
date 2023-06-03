@@ -6,14 +6,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Pages/Home";
 import SignUp from "./Pages/SignUp";
 import CameraScreen from "./Pages/Camera";
-import designSystem from "./components/style/designSystem";
+import DesignSystem from "./components/style/DesignSystem";
 import { Image, View } from 'react-native';
 import useFont from "./components/hooks/useFont";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   const isFontLoaded = useFont();
-  const { COLOR, PRIMARY, STACK_NAV_HEADER } = designSystem();
+  const { COLOR, PRIMARY, STACK_NAV_HEADER } = DesignSystem();
   const pinkGreen = PRIMARY.COLOUR_ON_COLOUR.RED_BLACK;
   const options = STACK_NAV_HEADER
 
