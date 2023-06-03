@@ -6,29 +6,33 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Pages/Home";
 import SignUp from "./Pages/SignUp";
 import CameraScreen from "./Pages/Camera";
+import designSystem from "./components/style/designSystem";
+import { Image, View } from 'react-native';
+import useFont from "./components/hooks/useFont";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
-  const options = {
-    headerStyle: {
-      backgroundColor: "darkgreen",
-      color: "white",
-    },
-    headerTitleStyle: {
-      color: "#fff",
-    },
-    headerTintColor: "#fff", // set the back button arrow color to white
-  };
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} options={options} />
-        <Stack.Screen name="Home" component={Home} options={options} />
-        <Stack.Screen name="SignUp" component={SignUp} options={options} />
-        <Stack.Screen name="Camera" component={CameraScreen} options={options} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  const isFontLoaded = useFont();
+  const { COLOR, PRIMARY, STACK_NAV_HEADER } = designSystem();
+  const pinkGreen = PRIMARY.COLOUR_ON_COLOUR.RED_BLACK;
+  const options = STACK_NAV_HEADER
+
+  ////////////////////////////////////////////////////////////////////////
+  // Font loading
+  if (isFontLoaded) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={options}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} options={options} />
+          <Stack.Screen name="SignUp" component={SignUp} options={options} />
+          <Stack.Screen name="Camera" component={CameraScreen} options={options} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return null;
+  }
 }
 
 const styles = StyleSheet.create({

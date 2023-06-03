@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     Button,
 } from 'react-native';
+import designSystem from '../components/style/designSystem';
 
 import { Appcontext } from '../lib/AppContext';
 export default function Login({ navigation }) {
@@ -31,6 +32,8 @@ export default function Login({ navigation }) {
         navigation.navigate('Camera');
     };
 
+    const { PRIMARY } = designSystem();
+    const pinkGreenStyle = PRIMARY.COLOUR_ON_COLOUR.PINK_GREEN;
     return (
         <View style={styles.container}>
             <TextInput
