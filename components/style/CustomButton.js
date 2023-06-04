@@ -6,10 +6,12 @@ import DesignSystem from './DesignSystem';
 
 
 const { COLOR } = DesignSystem();
+////////////////////////////////////////////////////////////////
+// If no props are provided, the default styles is applied
 export default function CustomButton({ title, onPress, style }) {
     return (
-        <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-            <Text style={styles.buttonText}>
+        <TouchableOpacity activeOpacity={0.4} style={[styles.button, style]} onPress={onPress}>
+            <Text style={[styles.buttonText, style]}>
                 {title}
             </Text>
         </TouchableOpacity>
