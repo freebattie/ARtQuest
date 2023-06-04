@@ -6,11 +6,13 @@ import {
     View,
     TextInput,
     Button,
+    Image,
+    TouchableOpacity,
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
-
+import DashedLine from '../components/style/DashedLine';
 
 
 
@@ -21,7 +23,7 @@ export default function Login({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useContext(Appcontext);
-    
+
     const handleLogin = async () => {
         try {
             await login({ userName, password });
@@ -30,16 +32,16 @@ export default function Login({ navigation }) {
             console.log('handelLogin', error);
         }
     };
-    
+
     // Route to SignUp screen
     const handleCreateUser = () => {
         navigation.navigate('SignUp');
     };
-    
+
     const handleOpenCamera = () => {
         navigation.navigate('Camera');
     };
-    
+
     // hook for safe view
     // TODO: refactor this into style in a context/provider?
     const insets = useSafeAreaInsets();
@@ -61,10 +63,14 @@ export default function Login({ navigation }) {
             borderWidth: 1.5,
             borderRadius: 2,
             paddingHorizontal: 10,
-            marginBottom: 10,
+            marginBottom: 15,
         },
         button: {
             color: COLOR.MUNCH_BLACK,
+        },
+        icon: {
+            width: 32,
+            height: 32,
         }
     });
     return (
@@ -75,7 +81,6 @@ export default function Login({ navigation }) {
                 onChangeText={(userName) => setUserName(userName)}
                 placeholder={'UserName'}
             />
-
             <TextInput
                 value={password}
                 onChangeText={(password) => setPassword(password)}
@@ -84,7 +89,34 @@ export default function Login({ navigation }) {
             />
 
             <CustomButton style={styles.button} title="login" onPress={() => handleLogin()} />
-            <Button title="create" onPress={() => handleCreateUser()} />
+            <View style={{ flexDirection: 'row', margin: 20 }}>
+                <Text>
+                    Can't login? Reset
+                </Text>
+                <TouchableOpacity>
+                    <Text style={{ marginLeft: 2, color: COLOR.MUNCH_RED }}>password</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+                <DashedLine />
+                <Text>or</Text>
+                <DashedLine />
+            </View>
+            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', width: 250, height: 50, borderColor: 'red', borderStyle: 'solid', borderWidth: 0 }}>
+                <Image style={styles.icon} source={require('../assets/icons/facebook.png')} />
+                <Image style={styles.icon} source={require('../assets/icons/google.png')} />
+                <Image style={styles.icon} source={require('../assets/icons/instagram.png')} />
+                <Image style={styles.icon} source={require('../assets/icons/apple.png')} />
+            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', margin: 20 }}>
+                <Text>
+                    Don't have an account?
+                </Text>
+                <TouchableOpacity onPress={() => handleCreateUser()}>
+                    <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>Sign up</Text>
+                </TouchableOpacity>
+            </View>
+
             <Button title="camera" onPress={() => handleOpenCamera()} />
         </View>
     );
