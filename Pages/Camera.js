@@ -1,5 +1,5 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Button,
     StyleSheet,
@@ -80,25 +80,24 @@ export default function CameraScreen() {
                 style={StyleSheet.absoluteFillObject}
             />
 
-            { prevItem != activeItem ? scanned && (
+            {scanned &&
                 <TouchableOpacity
                     onPress={() => setScanned(false)}
-                    style={styles.itemContainer}
                 >
-                    { activeItem != "N/A" &&
+                    {prevItem != activeItem ?
                         <Image
-                        source={scannedImage['src']}
-                        style={{ width: 150, height: 150 }}
-                        />
+                            source={scannedImage['src']}
+                            style={{ width: 150, height: 150 }}
+                        /> :
+                        <View>
+                            <Button
+                                title='OK'
+                                onPress={() => setScanned(false)}
+                            />
+                        </View>
                     }
                 </TouchableOpacity>
-            ) : scanned ? (
-                <Button title={"OK GOT IT!!"}onPress={() => {
-                    setPrevItem("")
-                    setActiveItem("N/A");
-                    setScanned(false);
-                }}></Button>
-            ) : <></>}
+            }
         </View>
     );
 }
