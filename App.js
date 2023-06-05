@@ -31,7 +31,11 @@ export default function App() {
         return (
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <Stack.Navigator screenOptions={options}>
+                    <StatusBar hidden />
+                    <Stack.Navigator
+                        headerShown={false}
+                        screenOptions={options}
+                    >
                         <Stack.Screen name="Login" component={Login} />
                         <Stack.Screen
                             name="Home"
