@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import {
     StyleSheet,
     Text,
@@ -14,20 +15,17 @@ import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
 
-
-
-
 const { COLOR } = designSystem();
 
 export default function Login({ navigation }) {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setUserName] = useState('test@test.no');
+    const [password, setPassword] = useState('test');
     const { login } = useContext(Appcontext);
 
     const handleLogin = async () => {
         try {
-            await login({ userName, password });
-            navigation.navigate('Camera');
+            await login({ email: email, password });
+            navigation.navigate('Home');
         } catch (error) {
             console.log('handelLogin', error);
         }
@@ -71,13 +69,13 @@ export default function Login({ navigation }) {
         icon: {
             width: 32,
             height: 32,
-        }
+        },
     });
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
-                value={userName}
+                value={email}
                 onChangeText={(userName) => setUserName(userName)}
                 placeholder={'UserName'}
             />
@@ -88,13 +86,17 @@ export default function Login({ navigation }) {
                 style={styles.input}
             />
 
-            <CustomButton style={styles.button} title="login" onPress={() => handleLogin()} />
+            <CustomButton
+                style={styles.button}
+                title="login"
+                onPress={() => handleLogin()}
+            />
             <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text>
-                    Can't login? Reset
-                </Text>
+                <Text>Can't login? Reset</Text>
                 <TouchableOpacity>
-                    <Text style={{ marginLeft: 2, color: COLOR.MUNCH_RED }}>password</Text>
+                    <Text style={{ marginLeft: 2, color: COLOR.MUNCH_RED }}>
+                        password
+                    </Text>
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row' }}>
@@ -102,18 +104,41 @@ export default function Login({ navigation }) {
                 <Text>or</Text>
                 <DashedLine />
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', width: 250, height: 50, borderColor: 'red', borderStyle: 'solid', borderWidth: 0 }}>
-                <Image style={styles.icon} source={require('../assets/icons/facebook.png')} />
-                <Image style={styles.icon} source={require('../assets/icons/google.png')} />
-                <Image style={styles.icon} source={require('../assets/icons/instagram.png')} />
-                <Image style={styles.icon} source={require('../assets/icons/apple.png')} />
+            <TouchableOpacity
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    width: 250,
+                    height: 50,
+                    borderColor: 'red',
+                    borderStyle: 'solid',
+                    borderWidth: 0,
+                }}
+            >
+                <Image
+                    style={styles.icon}
+                    source={require('../assets/icons/facebook.png')}
+                />
+                <Image
+                    style={styles.icon}
+                    source={require('../assets/icons/google.png')}
+                />
+                <Image
+                    style={styles.icon}
+                    source={require('../assets/icons/instagram.png')}
+                />
+                <Image
+                    style={styles.icon}
+                    source={require('../assets/icons/apple.png')}
+                />
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text>
-                    Don't have an account?
-                </Text>
+                <Text>Don't have an account?</Text>
                 <TouchableOpacity onPress={() => handleCreateUser()}>
-                    <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>Sign up</Text>
+                    <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>
+                        Sign up
+                    </Text>
                 </TouchableOpacity>
             </View>
 
@@ -121,4 +146,3 @@ export default function Login({ navigation }) {
         </View>
     );
 }
-
