@@ -13,10 +13,10 @@ import { Appcontext } from '../lib/AppContext';
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [activeItem, setActiveItem] = useState(false);
+    const [activeItem, setActiveItem] = useState('N/A');
     const [prevItem, setPrevItem] = useState('');
     const { sendItem } = useContext(Appcontext);
-    const [quests, setQuests] = useState({});
+    const [quests, setQuests] = useState(new Map(quests));
 
     const [allItemsFromAssets, doNotUse] = useState([
         {
@@ -47,51 +47,89 @@ export default function CameraScreen() {
     // Handling user event
     ////////////////////////////////
     const handleBarCodeScanned = async ({ type, data }) => {
-        setScanned(true);
+        let foundObject = null;
+        try {
+            foundObject = await JSON.parse(data);
+        } catch (error) {
+            console.log('scanned Wrong item ', error);
+        }
+
+        ////////////////////////////////////////////////////
+        // Returning the current scanned image require ID
+        ////////////////////////////////////////////////////
+        if (foundObject) {
+            console.log('not here? ', foundObject.name);
+            setActiveItem(foundObject.name);
+        } else {
+            setScanned(false);
+            setActiveItem('N/A');
+            return;
+        }
+
         // TODO: Modal or alert?
         //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
-        const foundObject = await JSON.parse(data);
-        const serverData = {};
-        const currentQuests = { ...quests };
+
+        let serverData = {};
+        let currentQuests = new Map(quests);
+
         if (!currentQuests.has(foundObject.name)) {
-            setActiveItem(foundObject.name);
-            currentQuests.set(activeItem, {
-                collected: [foundObject.item],
-                quest: foundObject.quest,
-            });
+            setScanned(true);
+            console.log('get here? ', currentQuests);
+            let collected = [];
+            collected.push(foundObject.item);
             try {
+                console.log(activeItem);
+                currentQuests.set(foundObject.name, {
+                    collected: collected,
+                    quest: foundObject.quest,
+                });
+                console.log('sending ', foundObject.quest, foundObject.item);
                 serverData = await sendItem({
                     quest: foundObject.quest,
                     item: foundObject.item,
                 });
+                console.log(serverData);
             } catch (error) {
-                console.log(error);
+                console.log('sendItem error ', error);
             }
 
-            console.log('data is', serverData);
-            const tempQuest = currentQuests.get(activeItem);
+            console.log('data is', serverData, 'current ', currentQuests);
+            const tempQuest = currentQuests.get(foundObject.name);
             tempQuest.collected = serverData.collected;
-            currentQuests.set(activeItem);
-            setQuests;
-            setPrevItem(activeItem);
+            currentQuests.set(foundObject.name, tempQuest);
+            setQuests(currentQuests);
         } else {
-            console.log('here');
-            setActiveItem(foundObject.name);
-            const quest = currentQuests.get(activeItem);
-            console.log('quest ', quest);
-            const found = quest.collected.find(
+            const tmpQuest = currentQuests.get(foundObject.name);
+            console.log('tmpQuest are', tmpQuest);
+
+            const found = tmpQuest.collected.find(
                 (item) => item == foundObject.item
             );
             console.log('found is', found);
             if (found) {
-                setActiveItem(foundObject.name);
-                setPrevItem(activeItem);
+                setActiveItem('N/A');
+            } else {
+                setScanned(true);
+                try {
+                    console.log(foundObject.quest, 'SENDING', foundObject.item);
+                    serverData = await sendItem({
+                        quest: foundObject.quest,
+                        item: foundObject.item,
+                    });
+                    const tempQuest = currentQuests.get(foundObject.name);
+                    serverData.collected.push(foundObject.item);
+                    tempQuest.collected = serverData.collected;
+                    currentQuests.set(foundObject.name, tempQuest);
+                } catch (error) {
+                    console.log('handleBarCodeScanned', error);
+                }
             }
         }
-
-        setPrevItem(activeItem);
-        console.log(serverData);
     };
+
+    const scannedImage = allItemsFromAssets.find(
+        (item) => item.name == activeItem
+    );
 
     ////////////////////////////////
     // Conditional rendering
@@ -103,48 +141,26 @@ export default function CameraScreen() {
         return <Text>Permission denied</Text>;
     }
 
-    ////////////////////////////////////////////////////
-    // Returning the current scanned image require ID
-    ////////////////////////////////////////////////////
-    const scannedImage = allItemsFromAssets.find(
-        (item) => item.name == activeItem
-    );
-    console.log(scannedImage);
-    console.log(prevItem);
-    console.log(activeItem);
     return (
         <View style={styles.container}>
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
             />
-
-            {prevItem != activeItem ? (
-                scanned && (
-                    <TouchableOpacity
-                        onPress={() => setScanned(false)}
-                        style={styles.itemContainer}
-                    >
-                        {activeItem != 'N/A' && (
-                            <Image
-                                source={scannedImage['src']}
-                                style={{ width: 150, height: 150 }}
-                            />
-                        )}
-                    </TouchableOpacity>
-                )
-            ) : scanned ? (
-                <Button
-                    title={'OK GOT IT!!'}
-                    onPress={() => {
-                        setPrevItem('');
-                        setActiveItem('N/A');
-                        setScanned(false);
-                    }}
-                ></Button>
-            ) : (
-                <></>
-            )}
+            <TouchableOpacity
+                onPress={() => {
+                    setScanned(false);
+                    setActiveItem('N/A');
+                }}
+                style={styles.itemContainer}
+            >
+                {activeItem != 'N/A' && scanned && (
+                    <Image
+                        source={scannedImage['src']}
+                        style={{ width: 150, height: 150 }}
+                    />
+                )}
+            </TouchableOpacity>
         </View>
     );
 }
