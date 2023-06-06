@@ -33,7 +33,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={options} >
+          <Stack.Navigator  screenOptions={options} >
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Home" component={Home} options={options} />
             <Stack.Screen name="SignUp" component={SignUp} options={options} />
