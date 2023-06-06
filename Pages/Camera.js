@@ -142,7 +142,7 @@ export default function CameraScreen() {
     const scannedImage = allItemsFromAssets.find(
         (item) => item.name == activeItem
     );
-
+    const [showReward, setShowReward] = useState(false);
     ////////////////////////////////
     // Conditional rendering
     ////////////////////////////////
@@ -151,6 +151,19 @@ export default function CameraScreen() {
     }
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
+    }
+    if (showReward) {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setShowReward(false);
+                    setActiveItem('N/A');
+                }}
+                style={styles.itemContainer}
+            >
+                <Text>Your rewward is </Text>
+            </TouchableOpacity>
+        );
     }
     if (showQuestProgress) {
         let currentQuests = new Map(quests);
@@ -190,6 +203,17 @@ export default function CameraScreen() {
                     />
                 )}
             </TouchableOpacity>
+            {showQuestProgress && (
+                <TouchableOpacity
+                    onPress={() => {
+                        setShowQuestProgress(false);
+                        setActiveItem('N/A');
+                    }}
+                    style={styles.itemContainer}
+                >
+                    <Text>You have Picked up </Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
