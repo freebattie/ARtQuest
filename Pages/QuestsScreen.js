@@ -8,7 +8,7 @@ import {
     Button,
 } from 'react-native';
 
-export default function Quests({ navigation }) {
+export default function QuestsScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     return (

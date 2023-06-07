@@ -14,11 +14,10 @@ import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
-import QuestProgressItem from '../components/item/QuestProgressItem';
 
 const { COLOR } = designSystem();
 
-export default function Login({ navigation }) {
+export default function LoginScreen({ navigation }) {
     const [email, setUserName] = useState('test@test.no');
     const [password, setPassword] = useState('test');
     const { login } = useContext(Appcontext);
@@ -26,7 +25,7 @@ export default function Login({ navigation }) {
     const handleLogin = async () => {
         try {
             await login({ email: email, password });
-            navigation.navigate('Home');
+            navigation.navigate('HomeScreen');
         } catch (error) {
             console.log('handelLogin', error);
         }
@@ -34,11 +33,11 @@ export default function Login({ navigation }) {
 
     // Route to SignUp screen
     const handleCreateUser = () => {
-        navigation.navigate('SignUp');
+        navigation.navigate('SignUpScreen');
     };
 
     const handleOpenCamera = () => {
-        navigation.navigate('Camera');
+        navigation.navigate('CameraScreen');
     };
 
     // hook for safe view
@@ -72,11 +71,10 @@ export default function Login({ navigation }) {
             height: 32,
         },
     });
-    const quests = new Map();
-    quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
         <View style={styles.container}>
+
             <TextInput
                 style={styles.input}
                 value={email}
@@ -89,7 +87,6 @@ export default function Login({ navigation }) {
                 placeholder={'Password'}
                 style={styles.input}
             />
-
             <CustomButton
                 style={styles.button}
                 title="login"
