@@ -14,7 +14,7 @@ import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
-import QuestProgressItem from "../components/item/QuestProgressItem";
+import QuestProgressItem from '../components/item/QuestProgressItem';
 
 const { COLOR } = designSystem();
 
@@ -72,13 +72,11 @@ export default function Login({ navigation }) {
             height: 32,
         },
     });
-    const quests = new Map()
-    quests.set("scream", {name:'scream',collected:[1,2], size: 2})
+    const quests = new Map();
+    quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
         <View style={styles.container}>
-
-
             <TextInput
                 style={styles.input}
                 value={email}

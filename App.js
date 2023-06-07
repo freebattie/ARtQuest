@@ -42,29 +42,28 @@ export default function App() {
         return (
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <StatusBar hidden/>
-                    <RootNavigator />
-                    {/*<Stack.Navigator*/}
-                    {/*    headerShown={false}*/}
-                    {/*    screenOptions={options}*/}
-                    {/*>*/}
-                    {/*    <Stack.Screen name="Login" component={Login}/>*/}
-                    {/*    <Stack.Screen*/}
-                    {/*        name="Home"*/}
-                    {/*        component={Home}*/}
-                    {/*        options={options}*/}
-                    {/*    />*/}
-                    {/*    <Stack.Screen*/}
-                    {/*        name="SignUp"*/}
-                    {/*        component={SignUp}*/}
-                    {/*        options={options}*/}
-                    {/*    />*/}
-                    {/*    <Stack.Screen*/}
-                    {/*        name="Camera"*/}
-                    {/*        component={CameraScreen}*/}
-                    {/*        options={options}*/}
-                    {/*    />*/}
-                    {/*</Stack.Navigator>*/}
+                    <StatusBar hidden />
+                    <Stack.Navigator
+                        headerShown={false}
+                        screenOptions={options}
+                    >
+                        <Stack.Screen name="Login" component={Login} />
+                        <Stack.Screen
+                            name="Home"
+                            component={}
+                            options={options}
+                        />
+                        <Stack.Screen
+                            name="SignUp"
+                            component={SignUp}
+                            options={options}
+                        />
+                        <Stack.Screen
+                            name="Camera"
+                            component={CameraScreen}
+                            options={options}
+                        />
+                    </Stack.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>
         );

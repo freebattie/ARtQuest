@@ -1,5 +1,5 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import {
     Button,
     StyleSheet,
@@ -9,17 +9,35 @@ import {
     Image,
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
+import QuestProgressItem from '../components/item/QuestProgressModal';
 
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState('N/A');
-    const [prevItem, setPrevItem] = useState('');
-    const { sendItem } = useContext(Appcontext);
+    const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map(quests));
     const [reward, setReward] = useState('');
     const [showQuestProgress, setShowQuestProgress] = useState(false);
-
+    const [loading, setLoading] = useState(true);
+    const [showReward, setShowReward] = useState(false);
+    const [imageX, setImageX] = useState(0);
+    const [imageY, setImageY] = useState(0);
+    const [imageXOffset, setImageXOffset] = useState(0);
+    const [imageYOffset, setImageYOffset] = useState(0);
+    const [imageHeight, setImageHeight] = useState(0);
+    const [imageWidth, setImageWidth] = useState(0);
+    const textContainerRef = useRef < View > null;
+    const textRef = useRef < Text > null;
+    onLayout = (e) => {
+        console.log(e.nativeEvent.layout.x);
+        console.log(imageX);
+        setImageXOffset(e.nativeEvent.layout.x);
+        setImageYOffset(e.nativeEvent.layout.y);
+    };
+    /**
+     * Hardcoded Values for images
+     */
     const [allItemsFromAssets, doNotUse] = useState([
         {
             src: require('../assets/images/rocks.png'),
@@ -44,11 +62,47 @@ export default function CameraScreen() {
         // Side effect
         getBarCodeScannerPermissions();
     }, []);
+    const getAllItems = async () => {
+        try {
+            const data = await getAllQuest();
+        } catch (error) {
+            console.log(error);
+        }
 
-    ////////////////////////////////
-    // Handling user event
-    ////////////////////////////////
-    const handleBarCodeScanned = async ({ type, data }) => {
+        const serverQuestItem = new Map();
+
+        for (const item of data) {
+            if (item.quest == 1) {
+                serverQuestItem.set('scream', item);
+            } else if (item.quest == 2) {
+                serverQuestItem.set('rocks', item);
+            }
+        }
+        setQuests(serverQuestItem);
+    };
+    useEffect(() => {
+        //getAllItems();
+        setLoading(false);
+    }, []);
+    const noQRCode = () => {
+        setScanned(false);
+    };
+    /**
+     *
+     * @param {what type QR} type
+     *  @param {Data in the QR code} data
+     * @returns
+     */
+    const handleBarCodeScanned = async ({
+        type,
+        data,
+        bounds,
+        cornerPoints,
+    }) => {
+        setImageX(bounds['origin'].x);
+        setImageY(bounds['origin'].y);
+        setImageHeight(bounds['size'].height);
+        setImageWidth(bounds['size'].width);
         let foundObject = null;
         try {
             foundObject = await JSON.parse(data);
@@ -64,7 +118,7 @@ export default function CameraScreen() {
         } else {
             setScanned(false);
             setActiveItem('N/A');
-            setShowQuestProgress(true);
+
             return;
         }
 
@@ -84,6 +138,7 @@ export default function CameraScreen() {
                 currentQuests.set(foundObject.name, {
                     collected: collected,
                     quest: foundObject.quest,
+                    name: foundObject.name,
                 });
                 console.log(
                     'sending first time only',
@@ -107,33 +162,39 @@ export default function CameraScreen() {
             currentQuests.set(foundObject.name, tempQuest);
             setQuests(currentQuests);
         } else {
-            console.log('quest is there ');
-            const tmpQuest = currentQuests.get(foundObject.name);
-            console.log('collected is ', tmpQuest);
-            const found = tmpQuest.collected.find(
-                (item) => item == foundObject.item
-            );
+            if (!scanned) {
+                console.log('quest is there ');
+                const tmpQuest = currentQuests.get(foundObject.name);
+                console.log('collected is ', tmpQuest);
+                const found = tmpQuest.collected.find(
+                    (item) => item == foundObject.item
+                );
 
-            if (found) {
-                console.log('quest is there, and item is picked up ');
-                setActiveItem('N/A');
-            } else {
-                console.log('quest is there, and item is not picked up ');
-                setScanned(true);
-                try {
-                    console.log(foundObject.quest, 'SENDING', foundObject.item);
-                    serverData = await sendItem({
-                        quest: foundObject.quest,
-                        item: foundObject.item,
-                    });
-                    console.log('testing', serverData);
+                if (found) {
+                    console.log('quest is there, and item is picked up ');
+                    setActiveItem('N/A');
+                } else {
+                    console.log('quest is there, and item is not picked up ');
+                    setScanned(true);
+                    try {
+                        console.log(
+                            foundObject.quest,
+                            'SENDING',
+                            foundObject.item
+                        );
+                        serverData = await sendItem({
+                            quest: foundObject.quest,
+                            item: foundObject.item,
+                        });
+                        console.log('testing', serverData);
 
-                    const tempQuest = currentQuests.get(foundObject.name);
-                    tempQuest.collected = serverData.collected;
-                    console.log('tempquest is when setitng it', tempQuest);
-                    currentQuests.set(foundObject.name, tempQuest);
-                } catch (error) {
-                    console.log('handleBarCodeScanned', error);
+                        const tempQuest = currentQuests.get(foundObject.name);
+                        tempQuest.collected = serverData.collected;
+                        console.log('tempquest is when setitng it', tempQuest);
+                        currentQuests.set(foundObject.name, tempQuest);
+                    } catch (error) {
+                        console.log('handleBarCodeScanned', error);
+                    }
                 }
             }
         }
@@ -143,6 +204,9 @@ export default function CameraScreen() {
         (item) => item.name == activeItem
     );
 
+    if (loading) {
+        return <Text>LOADINNG FROM SERVER</Text>;
+    }
     ////////////////////////////////
     // Conditional rendering
     ////////////////////////////////
@@ -152,25 +216,22 @@ export default function CameraScreen() {
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
     }
-    if (showQuestProgress) {
-        let currentQuests = new Map(quests);
-        const quest = currentQuests.get(activeItem);
-
+    if (showReward) {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    setShowQuestProgress(false);
+                    setShowReward(false);
                     setActiveItem('N/A');
                 }}
                 style={styles.itemContainer}
             >
-                <Text>You have Picked up </Text>
+                <Text>Your rewward is </Text>
             </TouchableOpacity>
         );
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayout}>
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
@@ -186,10 +247,25 @@ export default function CameraScreen() {
                 {activeItem != 'N/A' && scanned && (
                     <Image
                         source={scannedImage['src']}
-                        style={{ width: 150, height: 150 }}
+                        style={{
+                            width: imageWidth,
+                            height: imageHeight,
+                            position: 'absolute',
+                            left: imageX - imageWidth - 10,
+                            top: imageY - imageHeight - 100,
+                        }}
                     />
                 )}
             </TouchableOpacity>
+            {showQuestProgress && (
+                <QuestProgressItem
+                    quests={quests}
+                    setShowQuestProgress={setShowQuestProgress}
+                    setActiveItem={setActiveItem}
+                    activeItem={activeItem}
+                    image={scannedImage}
+                />
+            )}
         </View>
     );
 }
@@ -198,6 +274,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
     },
     itemContainer: {

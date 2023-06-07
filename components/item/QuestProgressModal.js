@@ -7,15 +7,18 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
  * @param {*} setShowQuestProgress : useState hook to control the state of showing this modal
  * @returns a modal with object information
  */
-export default function QuestProgressItem({quests, activeItem, setShowQuestProgress}) {
+export default function QuestProgressItem({
+    quests,
+    activeItem,
+    setActiveItem,
+    setShowQuestProgress,
+    image,
+}) {
     const [isPressed, setIsPressed] = useState(false);
-    console.log("questitem ",quests);
-    console.log("test",activeItem);
+
     const quest = quests.get(activeItem);
     const { name, size, collected } = quest;
-    console.log(name);
-    console.log(size);
-    console.log(collected.length);
+
     const onPressInHandler = () => {
         setIsPressed(true);
         console.log(isPressed);
@@ -24,6 +27,8 @@ export default function QuestProgressItem({quests, activeItem, setShowQuestProgr
     };
     const onPressOutHandler = () => {
         setIsPressed(false);
+        setShowQuestProgress(false);
+        setActiveItem('N/A');
         console.log(isPressed);
     };
     return (
@@ -36,10 +41,7 @@ export default function QuestProgressItem({quests, activeItem, setShowQuestProgr
             onPressIn={() => onPressInHandler()}
             onPressOut={() => onPressOutHandler()}
         >
-            <Image 
-                source={require('../../assets/images/rocks.png')} 
-                style={styles.image}
-            />
+            <Image source={image['src']} style={styles.image} />
             <Text
                 style={[
                     styles.containerText,
@@ -49,7 +51,7 @@ export default function QuestProgressItem({quests, activeItem, setShowQuestProgr
                 QuestProgressItem
             </Text>
             <Text style={styles.containerText}>
-                {size}/{collected.length}
+                {collected.length}/{size}
             </Text>
         </TouchableOpacity>
     );
@@ -57,17 +59,16 @@ export default function QuestProgressItem({quests, activeItem, setShowQuestProgr
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: '60%',
+        width: '70%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '70%',
         borderWidth: 1,
         borderRadius: 5,
         backgroundColor: '#0f2335',
     },
     containerPressed: {
-        flex: 1,
         backgroundColor: '#ccc',
     },
     containerText: {
@@ -85,5 +86,5 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         resizeMode: 'contain',
         aspectRatio: 0.75,
-    }
+    },
 });
