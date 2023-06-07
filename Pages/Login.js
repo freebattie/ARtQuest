@@ -9,6 +9,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
+    KeyboardAvoidingView
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
@@ -82,6 +83,12 @@ export default function Login({ navigation }) {
     quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
+        <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: COLOR.WHITE }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={-100}
+        >
+
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
@@ -176,5 +183,6 @@ export default function Login({ navigation }) {
 
             <Button title="camera" onPress={() => handleOpenCamera()} />
         </View>
+        </KeyboardAvoidingView>
     );
 }

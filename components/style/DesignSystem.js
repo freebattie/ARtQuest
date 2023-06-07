@@ -212,7 +212,7 @@ export default function designSystem() {
             width: 150,
             height: 30,
             borderWidth: 0,
-            borderColor: COLOR.WHITE,
+            borderColor: 'rgba(50, 50, 50, 1)',
             margin: 5,
             fontFamily: 'Montserrat',
             fontWeight: '700',
@@ -238,10 +238,11 @@ export default function designSystem() {
         passwordInputContainer: {
             flexDirection: 'row',
             alignItems: 'center',
-            borderColor: COLOR.DARK_GRAY,
-            borderWidth: 1,
+            borderColor: 'rgba(50,50,50,1)',
+            borderWidth: 1.4,
             paddingHorizontal: 10,
             marginBottom: 10,
+            width: '70%',
         },
 
         passwordIconContainer: {
