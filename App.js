@@ -30,10 +30,12 @@ const Tab = createBottomTabNavigator();
 import {FontAwesome} from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
+
+const {COLOR, PRIMARY, STACK_NAV_HEADER,rolf } = DesignSystem();
+    const options = STACK_NAV_HEADER;
 export default function App() {
     const isFontLoaded = useFont();
-    const {COLOR, PRIMARY, STACK_NAV_HEADER} = DesignSystem();
-    const options = STACK_NAV_HEADER;
+    
     const BottomTab = createBottomTabNavigator();
 
     ////////////////////////////////////////////////////////////////////////
@@ -83,7 +85,7 @@ function RootNavigator() {
             <Stack.Screen
                 name="Login"
                 component={LoginScreen}
-                options={{headerShown: false}}
+                options={options}
             />
             <Stack.Screen
                 name="Home"
