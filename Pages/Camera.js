@@ -105,6 +105,7 @@ export default function CameraScreen() {
             tempQuest.collected = serverData.collected;
             tempQuest.size = serverData.size;
             currentQuests.set(foundObject.name, tempQuest);
+            console.log("test");
             setQuests(currentQuests);
         } else {
             console.log('quest is there ');
