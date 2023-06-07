@@ -15,6 +15,8 @@ export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState('N/A');
+    const [activQuest, setActivQuest] = useState('');
+    const [activeItemId, setActiveItemId] = useState(0);
     const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map());
     const [reward, setReward] = useState('');
@@ -95,7 +97,6 @@ export default function CameraScreen() {
         setImageHeight(bounds['size'].height);
         setImageWidth(bounds['size'].width);
         let foundObject = null;
-        console.log(data);
 
         /* setTimeout(function () {
             setActiveItem('N/A');
@@ -105,6 +106,27 @@ export default function CameraScreen() {
             foundObject = await JSON.parse(data);
             if (foundObject) {
                 setActiveItem(foundObject.name);
+                setActivQuest(foundObject.quest);
+                setActiveItemId(foundObject.item);
+            }
+
+            let currentQuests = new Map(quests);
+
+            if (!currentQuests.get(foundObject.name)) {
+            } else {
+                console.log('here');
+                let quest = currentQuests.get(foundObject.name);
+                let found = quest.collected.find((item) => {
+                    return item == foundObject.item;
+                });
+                console.log('here', found);
+                if (found) {
+                    console.log('got here');
+                    setActiveItem('N/A');
+                    setActivQuest('');
+                    setActiveItemId(0);
+                    setScanned(false);
+                }
             }
         } catch (error) {
             console.log('scanned Wrong item ', error);
@@ -141,9 +163,12 @@ export default function CameraScreen() {
         if (foundObject) {
             console.log('fund object', foundObject.name);
             setActiveItem(foundObject.name);
+            setActivQuest(foundObject.quest);
+            setActiveItemId(foundObject.item);
         } else {
             setScanned(false);
             setActiveItem('N/A');
+            setActiveItemId(0);
 
             return;
         }
@@ -162,6 +187,8 @@ export default function CameraScreen() {
             if (found) {
                 console.log('got here');
                 setActiveItem('N/A');
+                setActivQuest('');
+                setActiveItemId(0);
                 setScanned(false);
             }
         }
@@ -198,7 +225,7 @@ export default function CameraScreen() {
     }
 
     return (
-        <View style={styles.container} onLayout={onLayout}>
+        <View style={styles.container}>
             <BarCodeScanner
                 onBarCodeScanned={
                     scanned ? handelUpdateImageLocation : handleBarCodeScanned
@@ -206,21 +233,24 @@ export default function CameraScreen() {
                 style={StyleSheet.absoluteFillObject}
             />
             <TouchableOpacity
+                onLayout={onLayout}
                 onPress={async () => {
-                    setScanned(false);
-                    setActiveItem('N/A');
-                    setShowQuestProgress(true);
                     try {
                         const serverData = await sendItem({
-                            quest: foundObject.quest,
-                            item: foundObject.item,
+                            quest: activQuest,
+                            item: activeItemId,
                         });
                         let currentQuests = new Map(quests);
-                        const tempQuest = currentQuests.get(foundObject.name);
+                        const tempQuest = currentQuests.get(activeItem);
                         tempQuest.collected = serverData.collected;
                         tempQuest.size = serverData.size;
-                        currentQuests.set(foundObject.name, tempQuest);
+                        currentQuests.set(activeItem, tempQuest);
                         setQuests(currentQuests);
+                        setScanned(false);
+                        setActiveItem('N/A');
+                        setShowQuestProgress(true);
+                        setActivQuest('');
+                        setActiveItemId(0);
                     } catch (error) {
                         console.log('new EROROR', error);
                     }
@@ -234,8 +264,8 @@ export default function CameraScreen() {
                             width: imageWidth,
                             height: imageHeight,
                             position: 'absolute',
-                            left: imageX - imageWidth - 10,
-                            top: imageY - imageHeight - 100,
+                            left: imageX - imageXOffset,
+                            top: imageY - imageYOffset,
                         }}
                     />
                 )}
