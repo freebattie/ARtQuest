@@ -125,11 +125,13 @@ export default function Login({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <CustomButton
-                style={styles.button}
-                title="Login"
-                onPress={() => handleLogin()}
-            />
+           
+            {/* Swapped CustomButton Login button
+                with TouchableOpacity primaryButton */}
+            <TouchableOpacity onPress={() => handleLogin()} style={STYLING.primaryButton}> 
+                <Text style={STYLING.primaryButtonText} >Login</Text>
+            </TouchableOpacity>
+
             <View style={{ flexDirection: 'row', margin: 20 }}>
                 <Text>Can't login? Reset</Text>
                 <TouchableOpacity>

@@ -125,14 +125,7 @@ export default function designSystem() {
             fontSize: 28,
             margin: 5,
         },
-        primaryButtonText: {
-            color: COLOR.WHITE,
-            fontFamily: 'Montserrat',
-            fontSize: 18,
-            fontWeight: 'bold',
-            textAlign: 'center',
-        },
-        
+                
 
         /***********************
          *  AppHeader Section
