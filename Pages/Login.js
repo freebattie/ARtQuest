@@ -14,6 +14,7 @@ import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
+import QuestProgressItem from "../components/item/QuestProgressItem";
 
 const { COLOR } = designSystem();
 
@@ -77,7 +78,7 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
 
-            <QuestProgressItem quests={quests} activeItem="scream" setShowQuestProgress={setPassword}/>
+
             <TextInput
                 style={styles.input}
                 value={email}

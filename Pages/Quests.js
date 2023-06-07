@@ -14,7 +14,7 @@ export default function Quests({ navigation }) {
     return (
         <View style={styles.container}>
             <Text>Quests Menu</Text>
-            <Button title="Back" onPress={() => navigation.goBack()} />
+            <Button title="Back" onPress={() => navigation.pop()} />
         </View>
     );
 }
