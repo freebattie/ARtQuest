@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     Button,
 } from 'react-native';
+import ImageView from '../components/item/ImageView';
 
 export default function Collections({ navigation }) {
     const [userName, setUserName] = useState('');
@@ -14,6 +15,7 @@ export default function Collections({ navigation }) {
     return (
         <View style={styles.container}>
             <Text>Collections Menu</Text>
+
             <Button title="Back" onPress={() => navigation.goBack()} />
         </View>
     );
@@ -25,4 +27,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    rows: {},
 });

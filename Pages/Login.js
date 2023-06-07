@@ -71,13 +71,11 @@ export default function Login({ navigation }) {
             height: 32,
         },
     });
-    const quests = new Map()
-    quests.set("scream", {name:'scream',collected:[1,2], size: 2})
+    const quests = new Map();
+    quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
         <View style={styles.container}>
-
-            <QuestProgressItem quests={quests} activeItem="scream" setShowQuestProgress={setPassword}/>
             <TextInput
                 style={styles.input}
                 value={email}
