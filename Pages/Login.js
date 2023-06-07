@@ -14,14 +14,16 @@ import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
-import QuestProgressItem from "../components/item/QuestProgressItem";
+import QuestProgressItem from '../components/item/QuestProgressItem';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const { COLOR } = designSystem();
+const { COLOR, STYLING } = designSystem();
 
 export default function Login({ navigation }) {
     const [email, setUserName] = useState('test@test.no');
     const [password, setPassword] = useState('test');
     const { login } = useContext(Appcontext);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async () => {
         try {
@@ -39,6 +41,10 @@ export default function Login({ navigation }) {
 
     const handleOpenCamera = () => {
         navigation.navigate('Camera');
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     // hook for safe view
@@ -65,36 +71,56 @@ export default function Login({ navigation }) {
             marginBottom: 15,
         },
         button: {
-            color: COLOR.MUNCH_BLACK,
+            color: COLOR.MUNCH_WHITE,
         },
         icon: {
             width: 32,
             height: 32,
         },
     });
-    const quests = new Map()
-    quests.set("scream", {name:'scream',collected:[1,2], size: 2})
+    const quests = new Map();
+    quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
         <View style={styles.container}>
-
-
             <TextInput
                 style={styles.input}
                 value={email}
                 onChangeText={(userName) => setUserName(userName)}
                 placeholder={'UserName'}
             />
-            <TextInput
+
+             {/* <TextInput
                 value={password}
                 onChangeText={(password) => setPassword(password)}
                 placeholder={'Password'}
                 style={styles.input}
-            />
+            /> */}
+
+
+            {/* Added Password show hide functionality in the
+                password input field */}
+            <View style={STYLING.passwordInputContainer}>
+                <TextInput
+                    placeholder="Password"
+                    style={STYLING.loginPagePasswordInput}
+                    secureTextEntry={!showPassword}
+                />
+                <TouchableOpacity
+                    style={STYLING.passwordIconContainer}
+                    onPress={togglePasswordVisibility}
+                >
+                    <Icon
+                        name={showPassword ? 'eye' : 'eye-slash'}
+                        size={20}
+                        color="#888"
+                    />
+                </TouchableOpacity>
+            </View>
 
             <CustomButton
                 style={styles.button}
-                title="login"
+                title="Login"
                 onPress={() => handleLogin()}
             />
             <View style={{ flexDirection: 'row', margin: 20 }}>
