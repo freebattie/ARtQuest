@@ -10,6 +10,8 @@ import LoginScreen from './Pages/Login';
 import HomeScreen from './Pages/Home';
 import SignUpScreen from './Pages/SignUp';
 import CameraScreen from './Pages/Camera';
+import CollectionScreen from './Pages/Collection';
+import QuestScreen from './Pages/Quests';
 
 // Navigation
 import {NavigationContainer} from '@react-navigation/native';
@@ -26,6 +28,7 @@ const Tab = createBottomTabNavigator();
 
 // Tab Icon
 import {FontAwesome} from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export default function App() {
     const isFontLoaded = useFont();
@@ -70,6 +73,10 @@ export default function App() {
     }
 }
 
+/**
+ * 
+ * @returns a root navigator that will render the screen in chronological order
+ */
 function RootNavigator() {
     return (
         <Stack.Navigator>
@@ -88,20 +95,55 @@ function RootNavigator() {
                 component={BottomNavigator}
                 options={{headerShown: false}}
             />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{headerShown: false}}
+            />
         </Stack.Navigator>
     )
 }
 
+
+
+
+
+
+
+/**
+ * 
+ * @returns A bottom navigator with icons that routes to screen
+ * It's crucial to use navigation.pop() to remove the screen for the active stack.
+ * Otherwise, the bottom navigator will still be the active stack.
+ */
 function BottomNavigator() {
     return (
         <Tab.Navigator initialRouteName="Login">
             <Tab.Screen
-                name="sdfasdfsdfsdfsafsdf"
+                name="1"
                 component={CameraScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color, size}) =>
                         <FontAwesome name="home" size={size} color={color}/>
+                }}
+            />
+            <Tab.Screen
+                name="2"
+                component={CollectionScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({color, size}) =>
+                        <FontAwesome name="home" size={size} color={color}/>
+                }}
+            />
+            <Tab.Screen
+                name="3"
+                component={QuestScreen}
+                options={{
+                    headerShown: false, 
+                    tabBarIcon: ({color, size}) =>
+                        <MaterialCommunityIcons name="map-marker-question" size={size} color={color} />
                 }}
             />
         </Tab.Navigator>

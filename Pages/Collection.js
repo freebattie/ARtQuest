@@ -14,7 +14,7 @@ export default function Collections({ navigation }) {
     return (
         <View style={styles.container}>
             <Text>Collections Menu</Text>
-            <Button title="Back" onPress={() => navigation.goBack()} />
+            <Button title="Back" onPress={() => navigation.pop()} />
         </View>
     );
 }
