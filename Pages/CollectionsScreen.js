@@ -8,12 +8,10 @@ import {
     Button,
 } from 'react-native';
 
-export default function Quests({ navigation }) {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+export default function CollectionsScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text>Quests Menu</Text>
+            <Text>Collections Menu</Text>
             <Button title="Back" onPress={() => navigation.pop()} />
         </View>
     );

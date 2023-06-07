@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
-export default function SignUp({ navigation }) {
+export default function SignUpScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
