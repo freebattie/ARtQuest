@@ -71,11 +71,10 @@ export default function LoginScreen({ navigation }) {
             height: 32,
         },
     });
-    const quests = new Map();
-    quests.set('scream', { name: 'scream', collected: [1, 2], size: 2 });
 
     return (
         <View style={styles.container}>
+
             <TextInput
                 style={styles.input}
                 value={email}
@@ -88,7 +87,6 @@ export default function LoginScreen({ navigation }) {
                 placeholder={'Password'}
                 style={styles.input}
             />
-
             <CustomButton
                 style={styles.button}
                 title="login"

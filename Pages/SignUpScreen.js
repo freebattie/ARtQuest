@@ -36,7 +36,7 @@ export default function SignUpScreen({ navigation }) {
     const onPressSubmitHandler = () => {
         // TODO read response for status code
         createUser({ email, userName, password });
-        navigation.navigate('Login');
+        navigation.navigate('LoginScreen');
     };
 
     const onPressToggleHandler = () => {
