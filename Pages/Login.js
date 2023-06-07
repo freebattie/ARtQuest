@@ -14,6 +14,7 @@ import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
+import QuestProgressItem from '../components/item/QuestProgressItem';
 
 const { COLOR } = designSystem();
 
