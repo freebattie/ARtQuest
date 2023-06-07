@@ -39,7 +39,7 @@ export default function App() {
                         <Stack.Screen name="Login" component={Login} />
                         <Stack.Screen
                             name="Home"
-                            component={Home}
+                            component={}
                             options={options}
                         />
                         <Stack.Screen
