@@ -1,0 +1,65 @@
+[
+  {
+    "collected": [
+      1,
+      2
+    ],
+    "galleryname": "Exhibition: Munch Infinite",
+    "quest": 1,
+    "size": 2
+  },
+  {
+    "collected": [],
+    "galleryname": "Exhibition: Munch Monumental",
+    "quest": 2,
+    "size": 2
+  },
+  {
+    "collected": [],
+    "galleryname": "Exhibition: Munch Masterpieces",
+    "quest": 3,
+    "size": 3
+  },
+  {
+    "collected": [3],
+    "galleryname": "Exhibition: Munch Portraits",
+    "quest": 4,
+    "size": 2
+  },
+  {
+    "collected": [4, 5],
+    "galleryname": "Exhibition: Munch Landscapes",
+    "quest": 5,
+    "size": 2
+  },
+  {
+    "collected": [6, 7, 8],
+    "galleryname": "Exhibition: Munch Abstracts",
+    "quest": 6,
+    "size": 3
+  },
+  {
+    "collected": [],
+    "galleryname": "Exhibition: Munch Sculptures",
+    "quest": 7,
+    "size": 1
+  },
+  {
+    "collected": [9],
+    "galleryname": "Exhibition: Munch Still Life",
+    "quest": 8,
+    "size": 2
+  },
+  {
+    "collected": [],
+    "galleryname": "Exhibition: Munch Surrealism",
+    "quest": 9,
+    "size": 2
+  },
+  {
+    "collected": [10, 11],
+    "galleryname": "Exhibition: Munch Impressionism",
+    "quest": 10,
+    "size": 2
+  }
+]

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     Text,
@@ -7,14 +7,18 @@ import {
     SafeAreaView,
     Button,
 } from 'react-native';
+import QuestProgressCard from "../components/item/QuestProgressCard";
+import QuestProgressList from "../components/item/QuestProgressList";
 
-export default function QuestsScreen({ navigation }) {
+
+export default function QuestsScreen({navigation}) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     return (
         <View style={styles.container}>
             <Text>Quests Menu</Text>
-            <Button title="Back" onPress={() => navigation.pop()} />
+                <QuestProgressList/>
+            <Button title="Back" onPress={() => navigation.pop()}/>
         </View>
     );
 }
