@@ -8,13 +8,8 @@ import {
 import { useContext, useEffect, useState } from 'react';
 import useGetAllQuest from '../hooks/useGetAllQuest';
 import QuestProgressCard from './QuestProgressCard';
-import dummy from './dummy.json';
-import { v4 as ID } from 'uuid';
 
-
-
-
-
+import { Appcontext } from '../../lib/AppContext';
 
 /**
  * Functional Component that will make a request to server to fetch necessarily data.
@@ -24,15 +19,26 @@ import { v4 as ID } from 'uuid';
  * @returns A lazy list that will only render visible cards
  */
 export default function QuestProgressList() {
-    
     // useGetAllQuest is refactoring data fetching logic into own component
-    const quests = useGetAllQuest();
+    const { getAllQuest } = useContext(Appcontext);
+    const [loading, setloading] = useState(false);
+    const UsegetAllQuest = async () => {
+        const data = await getAllQuest();
 
+        setQuests(data);
+        setloading(true);
+    };
+    const [quests, setQuests] = useState([]);
+    useEffect(() => {
+        UsegetAllQuest();
+    }, []);
+    if (loading) {
+        <Text>LOADING..</Text>;
+    }
     return (
         <View style={styles.container}>
             <FlatList
                 data={quests}
-                keyExtractor={() => ID()}
                 renderItem={({ item }) => {
                     const divide = item.galleryname.split(': ');
                     const artist = divide[1].split(' ')[0];
@@ -41,9 +47,9 @@ export default function QuestProgressList() {
                     return (
                         <TouchableOpacity activeOpacity={0.75}>
                             <QuestProgressCard
-                                key={() => ID()}
+                                key={1}
                                 artist={artist}
-                                theme={" ".concat(theme)}
+                                theme={' '.concat(theme)}
                                 size={item.size}
                                 collected={item.collected.length}
                             />
