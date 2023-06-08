@@ -8,7 +8,7 @@ import {
     Button,
 } from 'react-native';
 
-export default function Home({ navigation }) {
+export default function HomeScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -16,19 +16,19 @@ export default function Home({ navigation }) {
             <Text>Main Menu</Text>
             <Button
                 title="Play"
-                onPress={() => navigation.navigate('Camera')}
+                onPress={() => navigation.navigate('CameraScreen')}
             />
             <Button
                 title="Quests"
-                onPress={() => navigation.navigate('Quests')}
+                onPress={() => navigation.navigate('QuestsScreen')}
             />
             <Button
                 title="Collections"
-                onPress={() => navigation.navigate('Collections')}
+                onPress={() => navigation.navigate('CollectionsScreen')}
             />
             <Button
                 title="Logout"
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('LoginScreen')}
             />
         </View>
     );
