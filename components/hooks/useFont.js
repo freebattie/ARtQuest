@@ -11,11 +11,12 @@ export default function useFont() {
         async function loadFont() {
             try {
                 await Font.loadAsync({
-                    
+
                     'GirottMunch-Bold': require('../../assets/fonts/GirottMunch-Bold.ttf'),
                     'GirottMunch-BoldBackslant': require('../../assets/fonts/GirottMunch-BoldBackslant.ttf'),
                     'Montserrat': require('../../assets/fonts/Montserrat-VariableFont_wght.ttf'),
                     'GirottMunch-BoldSlant': require('../../assets/fonts/GirottMunch-BoldSlant.ttf'),
+                    'HelveticaNeue': require('../../assets/fonts/HelveticaNeueMedium.ttf'),
                 });
             } catch (e) {
                 console.log(e);
