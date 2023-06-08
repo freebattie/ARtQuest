@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet, Image} from "react-native";
-import React, {useEffect, useState} from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect, useState } from "react";
 
 
 
@@ -16,7 +16,7 @@ import React, {useEffect, useState} from "react";
  * @param {children} - FC.ReactNode ? is optional if QuestProgressCard is not used as self-closing component
  * @returns 
  */
-export default function QuestProgressCard({artist, theme, size, collected, children}) {
+export default function QuestProgressCard({ artist, theme, size, collected, children }) {
 
     // Dynamic image
     const image = "scream";
@@ -25,7 +25,7 @@ export default function QuestProgressCard({artist, theme, size, collected, child
 
     useEffect(() => {
 
-        if (collected  == size ) {
+        if (collected == size) {
             setComplete(true);
         }
 
@@ -37,11 +37,11 @@ export default function QuestProgressCard({artist, theme, size, collected, child
     return (
         <View style={styles.container}>
             <View style={styles.detailsContainer}>
-                <Text style={[styles.artistText, complete ? {color: '#9b8250'} : {color: '#194641'}]}>{artist ? artist : 'Artist'}</Text>
-                <Text style={[styles.themeText, complete ? {color: '#9b8250'} : {color: '#194641'}]}>{theme ? theme : 'Theme'} :</Text>
+                <Text style={[styles.artistText, complete ? { color: '#9b8250' } : { color: '#194641' }]}>{artist ? artist : 'Artist'}</Text>
+                <Text style={[styles.themeText, complete ? { color: '#9b8250' } : { color: '#194641' }]}>{theme ? theme : 'Theme'} :</Text>
             </View>
             <View style={styles.trackerContainer}>
-                <Text style={[styles.progress, complete ? {color: '#9b8250'} : {color: '#194641'}]}>
+                <Text style={[styles.progress, complete ? { color: '#9b8250' } : { color: '#194641' }]}>
                     {collected ? collected : 0}/{size ? size : 0}
                 </Text>
                 <Image
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f5f5f5',
         borderWidth: 0, // For debugging
-        borderColor: 'black', 
+        borderColor: 'black',
         borderRadius: 5,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     themeText: {
         fontSize: 28,
-        fontFamily: 'backslant' ? 'backslant' : 'helvetica',
+        fontFamily: 'Munch-Backslant',
         color: 'crimson',
         textAlign: 'center',
         position: 'relative',

@@ -42,69 +42,72 @@ export default function Collections({ navigation }) {
         const image = getImageByName(selectedReward.filename);
         console.log("I am ", selectedReward.picturetitle);
         console.log("My histoy is ", selectedReward.picturedescription)
-        return (
-            <View style={[
-                designSystem().CONTAINERS.container,
-            ]}>
-                <Image
-                    style={[
-                        {
-                            resizeMode: 'contain',
-                            flex: 1,
-
-                        },
-                    ]}
-                    source={image}
-                />
-                <CustomButton
-                    title='Gallery'
-                    onPress={() => setIsSelected(false)}
-                    style={[
-                        designSystem().STYLING.primaryButton,
-                        designSystem().STYLING.primaryButtonText,
-                        {
-                            position: 'absolute',
-                            top: 10,
-
-                        }
-                    ]}
-                />
+        return (<>
+            <ScrollView
+            >
                 <Text
                     style={[
-                        designSystem().TEXT_STYLES.headline
+                        designSystem().TEXT_STYLES.title,
+                        {
+                            paddingTop: "10%",
+                            paddingEnd: "10%",
+                            textAlign: 'right',
+                            flex: 1,
+                        }
                     ]}
                 >
                     {selectedReward.picturetitle}
                 </Text>
-                <ScrollView
+                <Image
                     style={[
-                        { flex: 1 }
+                        {
+                            resizeMode: 'contain',
+                            width: '75%',
+                            marginTop: "-20%"
+                        },
+                    ]}
+                    source={image}
+                />
+                <Text
+                    style={[
+                        designSystem().TEXT_STYLES.text,
+                        {
+                            marginTop: "-15%",
+                            marginHorizontal: "15%"
+                        }
                     ]}
                 >
-                    <Text
-                        style={[
-                            designSystem().TEXT_STYLES.text
-                        ]}
-                    >
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                    </Text>
-                </ScrollView>
-            </View>
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                </Text>
+            </ScrollView>
+            <CustomButton
+                title='Gallery'
+                onPress={() => setIsSelected(false)}
+                style={[
+                    designSystem().STYLING.primaryButtonText,
+                    {
+                        // display: 'none',
+                        position: 'absolute',
+                        bottom: 0,
+                    }
+                ]}
+            />
+        </>
         );
     }
 

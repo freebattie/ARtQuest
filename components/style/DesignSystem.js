@@ -1,5 +1,4 @@
 import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import BackSlantText from './BackSlantText';
 
 export default function designSystem() {
     ////////////////////////////////////////////////////////////////////////
