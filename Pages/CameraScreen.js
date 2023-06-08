@@ -15,6 +15,8 @@ export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState('N/A');
+    const [activeItemId, setActiveItemId] = useState(0);
+    const [activeQuest, setActiveQuest] = useState('');
     const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map());
     const [reward, setReward] = useState('');
@@ -141,9 +143,13 @@ export default function CameraScreen() {
         if (foundObject) {
             console.log('fund object', foundObject.name);
             setActiveItem(foundObject.name);
+            setActiveItemId(foundObject.item);
+            setActiveQuest(foundObject.quest);
         } else {
             setScanned(false);
             setActiveItem('N/A');
+            setActiveItemId(0);
+            setActiveQuest('');
 
             return;
         }
@@ -163,6 +169,8 @@ export default function CameraScreen() {
                 console.log('got here');
                 setActiveItem('N/A');
                 setScanned(false);
+                setActiveItemId(0);
+                setActiveQuest('');
             }
         }
     };
