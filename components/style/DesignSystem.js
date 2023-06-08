@@ -1,5 +1,4 @@
 import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import BackSlantText from './BackSlantText';
 
 export default function designSystem() {
     ////////////////////////////////////////////////////////////////////////
@@ -57,7 +56,7 @@ export default function designSystem() {
             <View style={STYLING.appHeaderContainer}>
                 <TouchableOpacity style={STYLING.logoContainer}>
                     <Text style={STYLING.appHeaderTitleFont}> MUNCH</Text>
-                </TouchableOpacity >
+                </TouchableOpacity>
                 <Text style={STYLING.appHeaderSubtitle}>ARtQuest</Text>
             </View>
         ),
@@ -92,7 +91,6 @@ export default function designSystem() {
         title: {
             fontFamily: 'Munch-Backslant',
             fontSize: 48,
-
         },
         headline: {
             fontFamily: 'Munch-Bold',
@@ -124,8 +122,6 @@ export default function designSystem() {
          *  Button Section
          *  ***************/
 
-
-
         primaryButton: {
             width: 'auto',
             backgroundColor: COLOR.MUNCH_RED,
@@ -151,7 +147,6 @@ export default function designSystem() {
             margin: 5,
         },
 
-
         /***********************
          *  AppHeader Section
          *  ******************/
@@ -174,7 +169,6 @@ export default function designSystem() {
             fontFamily: 'Munch-Backslant',
             paddingTop: 5,
             paddingLeft: 15,
-
         },
         appHeaderSubtitleContainer: {
             flexDirection: 'column',
@@ -188,7 +182,6 @@ export default function designSystem() {
             width: '100%',
             color: COLOR.MUNCH_WHITE,
             paddingStart: 15,
-
         },
         appHeaderBackBtn: {
             marginRight: 20,
@@ -307,6 +300,6 @@ export default function designSystem() {
         INPUT_FORM,
         STYLING,
         CONTAINERS,
-        TEXT_STYLES
+        TEXT_STYLES,
     };
 }

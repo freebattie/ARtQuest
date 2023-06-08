@@ -1,11 +1,5 @@
-import {View, Text, StyleSheet, Image} from "react-native";
-import React, {useEffect, useState} from "react";
-
-
-
-
-
-
+import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 /**
  * QuestProgressCard is destructuring a data object that will display as card view for flat list
@@ -14,61 +8,81 @@ import React, {useEffect, useState} from "react";
  * @param {size} - number
  * @param {collected} - array
  * @param {children} - FC.ReactNode ? is optional if QuestProgressCard is not used as self-closing component
- * @returns 
+ * @returns
  */
-export default function QuestProgressCard({artist, theme, size, collected, children}) {
-
+export default function QuestProgressCard({
+    artist,
+    theme,
+    size,
+    collected,
+    children,
+}) {
     // Dynamic image
-    const image = "scream";
+    const image = 'scream';
 
     const [complete, setComplete] = useState(false);
 
     useEffect(() => {
-
-        if (collected  == size ) {
+        if (collected == size) {
             setComplete(true);
         }
-
-    }, [complete])
+    }, [complete]);
 
     console.log(complete);
-
 
     return (
         <View style={styles.container}>
             <View style={styles.detailsContainer}>
-                <Text style={[styles.artistText, complete ? {color: '#9b8250'} : {color: '#194641'}]}>{artist ? artist : 'Artist'}</Text>
-                <Text style={[styles.themeText, complete ? {color: '#9b8250'} : {color: '#194641'}]}>{theme ? theme : 'Theme'} :</Text>
+                <Text
+                    style={[
+                        styles.artistText,
+                        complete ? { color: '#9b8250' } : { color: '#194641' },
+                    ]}
+                >
+                    {artist ? artist : 'Artist'}
+                </Text>
+                <Text
+                    style={[
+                        styles.themeText,
+                        complete ? { color: '#9b8250' } : { color: '#194641' },
+                    ]}
+                >
+                    {theme ? theme : 'Theme'} :
+                </Text>
             </View>
             <View style={styles.trackerContainer}>
-                <Text style={[styles.progress, complete ? {color: '#9b8250'} : {color: '#194641'}]}>
+                <Text
+                    style={[
+                        styles.progress,
+                        complete ? { color: '#9b8250' } : { color: '#194641' },
+                    ]}
+                >
                     {collected ? collected : 0}/{size ? size : 0}
                 </Text>
                 <Image
-                    source={require(`../../assets/images/${image ? image : 'question'}.png`)}
+                    source={require(`../../assets/images/${
+                        image ? image : 'question'
+                    }.png`)}
                     style={styles.image}
                 />
             </View>
-            {
-                React.Children.map(children, (child) => {
-                    if (React.isValidElement(child)) {
-                        return React.cloneElement(child, {
-                            style: [child.props.style, styles.child],
-                        })
-                    }
-                    return child;
-                })
-            }
+            {React.Children.map(children, (child) => {
+                if (React.isValidElement(child)) {
+                    return React.cloneElement(child, {
+                        style: [child.props.style, styles.child],
+                    });
+                }
+                return child;
+            })}
         </View>
-    )
+    );
 }
-
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f5f5f5',
         borderWidth: 0, // For debugging
-        borderColor: 'black', 
+        borderColor: 'black',
         borderRadius: 5,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -90,12 +104,12 @@ const styles = StyleSheet.create({
     artistText: {
         fontSize: 15,
         fontWeight: 'bold',
-        fontFamily: 'sans-serif',
+        fontFamily: 'HelveticaNeue',
         color: 'crimson',
     },
     themeText: {
         fontSize: 28,
-        fontFamily: 'backslant' ? 'backslant' : 'helvetica',
+        fontFamily: 'Munch-Backslant',
         color: 'crimson',
         textAlign: 'center',
         position: 'relative',
@@ -119,5 +133,5 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: '75%',
         height: '75%',
-    }
-})
+    },
+});
