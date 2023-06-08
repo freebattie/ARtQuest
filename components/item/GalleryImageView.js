@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Pressable } from 'react-native';
+import { Appcontext } from '../../lib/AppContext';
 
 export default function GalleryImageView({ reward, onNavigate }) {
+   const { getImageByName } = useContext(Appcontext);
    console.log("GalleryImageView");
    console.log("reward: ", reward);
-   const [rewardImages, _] = useState([
-      {
-         name: "Scream",
-         data: require("../../assets/images/scream.png"),
-      },
-      {
-         name: "The Girls on the Bridge",
-         data: require("../../assets/images/rocks.png"),
-      }
-   ]);
 
    console.log("Accessing ", reward.filename)
-   const image = rewardImages.find((image) => image.name == reward.filename);
+   const image = getImageByName(reward.filename);
+   console.log("got: ", image);
    return (
       <Pressable onPress={() => onNavigate()}>
          <Image
-            source={image["data"]}
+            source={image}
          />
          <Text>{reward.title}</Text>
       </Pressable>
