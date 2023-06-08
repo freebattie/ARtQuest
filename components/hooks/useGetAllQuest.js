@@ -9,6 +9,24 @@ import {Appcontext} from "../../lib/AppContext";
  * @returns {*[]} array of quests from server
  */
 export default function useGetAllQuest() {
+    /*const { getAllQuest } = useContext(Appcontext);
+    const [loading, setLoading] = useState(false);
+    const [quest, setQuest] = useState();
+
+    useEffect(() => {
+        getAllQuests();
+    }, []);
+
+    const getAllQuests = async () => {
+        const data = await getAllQuest();
+        setLoading(false);
+        console.log(data);
+        setQuest(data);
+    };
+    if (loading) {
+        return <Text>Loading...</Text>;
+    }*/
+    
     const [quests, setQuests] = useState([]);
 
     const screenIsFocused = useIsFocused();
@@ -17,11 +35,12 @@ export default function useGetAllQuest() {
 
     useEffect(() => {
         const getQuests = async () => {
-            console.log('Getting quests from server');
             const data = await getAllQuest();
+            console.log('Getting quests from server', data);
             setQuests(data);
         };
 
+        // Fetch only when current screen is active 
         if (screenIsFocused) {
             getQuests();
         }
