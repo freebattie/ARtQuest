@@ -18,7 +18,7 @@ export default function QuestProgressItem({
 
     const quest = quests.get(activeItem);
     const { name, size, collected } = quest;
-
+    console.log(quest);
     const onPressInHandler = () => {
         setIsPressed(true);
         console.log(isPressed);
