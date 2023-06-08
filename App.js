@@ -29,7 +29,6 @@ const Tab = createBottomTabNavigator();
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
 export default function App() {
     const { COLOR, PRIMARY, STACK_NAV_HEADER } = DesignSystem();
     const options = STACK_NAV_HEADER;
@@ -58,14 +57,8 @@ export default function App() {
  */
 function RootNavigator({ options }) {
     return (
-        <Stack.Navigator
-            headerShown={false}
-            screenOptions={options}
-        >
-            <Stack.Screen
-                name="LoginScreen"
-                component={LoginScreen}
-            />
+        <Stack.Navigator headerShown={false} screenOptions={options}>
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
