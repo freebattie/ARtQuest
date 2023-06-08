@@ -198,7 +198,7 @@ export default function CameraScreen() {
     }
 
     return (
-        <View style={styles.container} onLayout={onLayout}>
+        <View style={styles.container}>
             <BarCodeScanner
                 onBarCodeScanned={
                     scanned ? handelUpdateImageLocation : handleBarCodeScanned
@@ -206,10 +206,8 @@ export default function CameraScreen() {
                 style={StyleSheet.absoluteFillObject}
             />
             <TouchableOpacity
+                onLayout={onLayout}
                 onPress={async () => {
-                    setScanned(false);
-                    setActiveItem('N/A');
-                    setShowQuestProgress(true);
                     try {
                         const serverData = await sendItem({
                             quest: foundObject.quest,
@@ -224,6 +222,9 @@ export default function CameraScreen() {
                     } catch (error) {
                         console.log('new EROROR', error);
                     }
+                    setScanned(false);
+                    setActiveItem('N/A');
+                    setShowQuestProgress(true);
                 }}
                 style={styles.itemContainer}
             >
@@ -234,8 +235,8 @@ export default function CameraScreen() {
                             width: imageWidth,
                             height: imageHeight,
                             position: 'absolute',
-                            left: imageX - imageWidth - 10,
-                            top: imageY - imageHeight - 100,
+                            left: imageX - imageXOffset,
+                            top: imageY - imageYOffset,
                         }}
                     />
                 )}
