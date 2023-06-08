@@ -12,7 +12,6 @@ import HomeScreen from './Pages/HomeScreen';
 import CameraScreen from './Pages/CameraScreen';
 import QuestsScreen from './Pages/QuestsScreen';
 import CollectionsScreen from './Pages/CollectionsScreen';
-import RewardScreen from './Pages/RewardScreen';
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,10 +30,11 @@ const Tab = createBottomTabNavigator();
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
 export default function App() {
-    const isFontLoaded = useFont();
     const { COLOR, PRIMARY, STACK_NAV_HEADER } = DesignSystem();
     const options = STACK_NAV_HEADER;
+    const isFontLoaded = useFont();
     const BottomTab = createBottomTabNavigator();
 
     ////////////////////////////////////////////////////////////////////////
@@ -44,45 +44,7 @@ export default function App() {
             <SafeAreaProvider>
                 <NavigationContainer>
                     <StatusBar hidden />
-                    <Stack.Navigator
-                        headerShown={false}
-                        screenOptions={options}
-                    >
-                        <Stack.Screen
-                            name="LoginScreen"
-                            component={LoginScreen}
-                        />
-                        <Stack.Screen
-                            name="HomeScreen"
-                            component={HomeScreen}
-                            options={options}
-                        />
-                        <Stack.Screen
-                            name="CollectionsScreen"
-                            component={CollectionsScreen}
-                            options={options}
-                        />
-                        <Stack.Screen
-                            name="QuestsScreen"
-                            component={QuestsScreen}
-                            options={options}
-                        />
-                        <Stack.Screen
-                            name="SignUpScreen"
-                            component={SignUpScreen}
-                            options={options}
-                        />
-                        <Stack.Screen
-                            name="CameraScreen"
-                            component={CameraScreen}
-                            options={options}
-                        />
-                        <Stack.Screen
-                            name="RewardScreen"
-                            component={RewardScreen}
-                            options={options}
-                        />
-                    </Stack.Navigator>
+                    <RootNavigator options={options} />
                 </NavigationContainer>
             </SafeAreaProvider>
         );
@@ -95,28 +57,40 @@ export default function App() {
  *
  * @returns a root navigator that will render the screen in chronological order
  */
-function RootNavigator() {
+function RootNavigator({ options }) {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            headerShown={false}
+            screenOptions={options}
+        >
             <Stack.Screen
                 name="LoginScreen"
                 component={LoginScreen}
-                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
-                options={{ headerShown: false }}
+                options={options}
             />
             <Stack.Screen
-                name="CameraScreen"
-                component={BottomNavigator}
-                options={{ headerShown: false }}
+                name="CollectionsScreen"
+                component={CollectionsScreen}
+                options={options}
+            />
+            <Stack.Screen
+                name="QuestsScreen"
+                component={QuestsScreen}
+                options={options}
             />
             <Stack.Screen
                 name="SignUpScreen"
                 component={SignUpScreen}
-                options={{ headerShown: false }}
+                options={options}
+            />
+            <Stack.Screen
+                name="CameraScreen"
+                component={BottomNavigator}
+                options={options}
             />
         </Stack.Navigator>
     );
@@ -153,7 +127,7 @@ function BottomNavigator() {
             />
             <Tab.Screen
                 name="3"
-                component={QuestScreen}
+                component={QuestsScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (

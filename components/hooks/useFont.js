@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import * as Font from "expo-font";
-
+import { useState, useEffect } from 'react';
+import * as Font from 'expo-font';
 
 ////////////////////////////////////////////////////////////////////////
 // Loading font from assets asynchronously and will load the font
@@ -12,9 +11,12 @@ export default function useFont() {
         async function loadFont() {
             try {
                 await Font.loadAsync({
-                    "backslant": require("../../assets/fonts/Backslant/Desktop/GirottMunch-BoldBackslant.ttf"),
-                })
-                
+                    
+                    'GirottMunch-Bold': require('../../assets/fonts/GirottMunch-Bold.ttf'),
+                    'GirottMunch-BoldBackslant': require('../../assets/fonts/GirottMunch-BoldBackslant.ttf'),
+                    'Montserrat': require('../../assets/fonts/Montserrat-VariableFont_wght.ttf'),
+                    'GirottMunch-BoldSlant': require('../../assets/fonts/GirottMunch-BoldSlant.ttf'),
+                });
             } catch (e) {
                 console.log(e);
             } finally {
@@ -23,7 +25,7 @@ export default function useFont() {
         }
 
         loadFont();
-    }, [])
+    }, []);
 
     return isLoadingComplete;
 }

@@ -3,36 +3,57 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    SafeAreaView,
-    Button,
     ScrollView,
+    Image,
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import GalleryImageView from '../components/item/GalleryImageView';
 
 export default function Collections({ navigation }) {
-    const { getAllUserRewards } = useContext(Appcontext);
+    const { getAllUserRewards, getImageByName } = useContext(Appcontext);
     // Steps
     // 1. Retrieve all collections from database
     // 2. display all rewards as an array of imageviews
     const [rewardsArray, setRewardsArray] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedReward, setSelectedReward] = useState({});
+    const [isSelected, setIsSelected] = useState(false);
+
+    // Functions
     const getUserRewards = async () => {
         const data = await getAllUserRewards();
         setLoading(false);
         setRewardsArray(data);
     };
-    const [loading, setLoading] = useState(true);
+
+    const selectImage = (reward) => {
+        console.log("Selected: ", reward);
+        return () => {
+            setSelectedReward(reward);
+            setIsSelected(true);
+        }
+    };
 
     useEffect(() => {
         getUserRewards();
     }, []);
 
-    const onNavigate = () => {
-        navigation.navigate('RewardScreen');
-    };
 
-    console.log('rewardsArray: ', rewardsArray);
+
+    if (isSelected) {
+        const image = getImageByName(selectedReward.filename);
+        console.log("I am ", selectedReward.picturetitle);
+        console.log("My histoy is ", selectedReward.picturedescription)
+        return (
+            <ScrollView>
+                <Image
+                    source={image}
+                />
+                <Text>{selectedReward.picturetitle}</Text>
+                <Text>{selectedReward.picturedescription}</Text>
+            </ScrollView>
+        );
+    }
 
     if (loading) {
         console.log('I am loading');
@@ -54,11 +75,12 @@ export default function Collections({ navigation }) {
         <View>
             <ScrollView style={styles.scrollView}>
                 {rewardsArray.map((reward, index) => {
+                    console.log("displaing reward: ", reward);
                     return (
                         <GalleryImageView
                             key={index}
                             reward={reward}
-                            onNavigate={onNavigate}
+                            onNavigate={selectImage(reward)}
                         />
                     );
                 })}
