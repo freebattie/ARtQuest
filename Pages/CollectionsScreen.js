@@ -5,15 +5,15 @@ import {
     View,
     ScrollView,
     Image,
+    Button,
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import GalleryImageView from '../components/item/GalleryImageView';
+import designSystem from '../components/style/DesignSystem';
+import CustomButton from '../components/style/CustomButton';
 
 export default function Collections({ navigation }) {
     const { getAllUserRewards, getImageByName } = useContext(Appcontext);
-    // Steps
-    // 1. Retrieve all collections from database
-    // 2. display all rewards as an array of imageviews
     const [rewardsArray, setRewardsArray] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedReward, setSelectedReward] = useState({});
@@ -38,20 +38,73 @@ export default function Collections({ navigation }) {
         getUserRewards();
     }, []);
 
-
-
     if (isSelected) {
         const image = getImageByName(selectedReward.filename);
         console.log("I am ", selectedReward.picturetitle);
         console.log("My histoy is ", selectedReward.picturedescription)
         return (
-            <ScrollView>
+            <View style={[
+                designSystem().CONTAINERS.container,
+            ]}>
                 <Image
+                    style={[
+                        {
+                            resizeMode: 'contain',
+                            flex: 1,
+
+                        },
+                    ]}
                     source={image}
                 />
-                <Text>{selectedReward.picturetitle}</Text>
-                <Text>{selectedReward.picturedescription}</Text>
-            </ScrollView>
+                <CustomButton
+                    title='Gallery'
+                    onPress={() => setIsSelected(false)}
+                    style={[
+                        designSystem().STYLING.primaryButton,
+                        designSystem().STYLING.primaryButtonText,
+                        {
+                            position: 'absolute',
+                            top: 10,
+
+                        }
+                    ]}
+                />
+                <Text
+                    style={[
+                        designSystem().TEXT_STYLES.headline
+                    ]}
+                >
+                    {selectedReward.picturetitle}
+                </Text>
+                <ScrollView
+                    style={[
+                        { flex: 1 }
+                    ]}
+                >
+                    <Text
+                        style={[
+                            designSystem().TEXT_STYLES.text
+                        ]}
+                    >
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+                    </Text>
+                </ScrollView>
+            </View>
         );
     }
 

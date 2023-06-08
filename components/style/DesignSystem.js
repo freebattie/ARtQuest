@@ -79,6 +79,31 @@ export default function designSystem() {
         },
     });
 
+    const CONTAINERS = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: COLOR.MUNCH_WHITE,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+    });
+
+    const TEXT_STYLES = StyleSheet.create({
+        title: {
+            fontFamily: 'Munch-Backslant',
+            fontSize: 48,
+
+        },
+        headline: {
+            fontFamily: 'Munch-Bold',
+            fontSize: 36,
+        },
+        text: {
+            fontFamily: 'HelveticaNeue',
+            fontSize: 22,
+        },
+    });
+
     const STYLING = StyleSheet.create({
         container: {
             flex: 1,
@@ -88,7 +113,7 @@ export default function designSystem() {
         },
 
         text: {
-            fontFamily: 'Montserrat',
+            fontFamily: 'HelveticaNeue',
             fontWeight: 'bold',
             fontSize: 22,
         },
@@ -99,7 +124,7 @@ export default function designSystem() {
          *  Button Section
          *  ***************/
 
-        
+
 
         primaryButton: {
             width: 'auto',
@@ -125,7 +150,7 @@ export default function designSystem() {
             fontSize: 28,
             margin: 5,
         },
-                
+
 
         /***********************
          *  AppHeader Section
@@ -146,10 +171,10 @@ export default function designSystem() {
             flex: 1,
             color: COLOR.MUNCH_RED,
             fontSize: 28,
-            fontFamily: 'GirottMunch-BoldBackslant',
+            fontFamily: 'Munch-Backslant',
             paddingTop: 5,
             paddingLeft: 15,
-            
+
         },
         appHeaderSubtitleContainer: {
             flexDirection: 'column',
@@ -158,12 +183,12 @@ export default function designSystem() {
         },
         appHeaderSubtitle: {
             flex: 1,
-            fontFamily: 'GirottMunch-Bold',
+            fontFamily: 'Munch-Bold',
             fontSize: 36,
             width: '100%',
             color: COLOR.MUNCH_WHITE,
             paddingStart: 15,
-        
+
         },
         appHeaderBackBtn: {
             marginRight: 20,
@@ -275,5 +300,13 @@ export default function designSystem() {
         },
     });
 
-    return { COLOR, PRIMARY, STACK_NAV_HEADER, INPUT_FORM, STYLING };
+    return {
+        COLOR,
+        PRIMARY,
+        STACK_NAV_HEADER,
+        INPUT_FORM,
+        STYLING,
+        CONTAINERS,
+        TEXT_STYLES
+    };
 }
