@@ -1,6 +1,6 @@
-import {useContext, useEffect, useState} from "react";
-import {useIsFocused} from "@react-navigation/native";
-import {Appcontext} from "../../lib/AppContext";
+import { useContext, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { Appcontext } from "../../lib/AppContext";
 
 
 /**
@@ -9,29 +9,11 @@ import {Appcontext} from "../../lib/AppContext";
  * @returns {*[]} array of quests from server
  */
 export default function useGetAllQuest() {
-    /*const { getAllQuest } = useContext(Appcontext);
-    const [loading, setLoading] = useState(false);
-    const [quest, setQuest] = useState();
-
-    useEffect(() => {
-        getAllQuests();
-    }, []);
-
-    const getAllQuests = async () => {
-        const data = await getAllQuest();
-        setLoading(false);
-        console.log(data);
-        setQuest(data);
-    };
-    if (loading) {
-        return <Text>Loading...</Text>;
-    }*/
-    
     const [quests, setQuests] = useState([]);
 
     const screenIsFocused = useIsFocused();
 
-    const {getAllQuest} = useContext(Appcontext);
+    const { getAllQuest } = useContext(Appcontext);
 
     useEffect(() => {
         const getQuests = async () => {

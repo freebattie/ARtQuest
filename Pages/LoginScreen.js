@@ -9,7 +9,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
