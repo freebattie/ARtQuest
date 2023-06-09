@@ -61,9 +61,9 @@ export default function Collections({ navigation }) {
             <Image
                style={[
                   {
-                     resizeMode: 'contain',
                      width: '75%',
-                     marginTop: "-20%"
+                     height: undefined,
+                     aspectRatio: 1,
                   },
                ]}
                source={image}
@@ -72,7 +72,7 @@ export default function Collections({ navigation }) {
                style={[
                   designSystem().TEXT_STYLES.text,
                   {
-                     marginTop: "-15%",
+                     marginTop: "15%",
                      marginHorizontal: "15%"
                   }
                ]}
