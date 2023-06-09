@@ -1,3 +1,5 @@
+// TODO fix KeyboardAvoidingView
+
 import React, { useContext, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -9,7 +11,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
 import { Appcontext } from '../lib/AppContext';
@@ -50,7 +52,7 @@ export default function LoginScreen({ navigation }) {
     // hook for safe view
     // TODO: refactor this into style in a context/provider?
     const insets = useSafeAreaInsets();
-    const styles = StyleSheet.create({
+    const STYLING = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: '#fff',
@@ -79,26 +81,52 @@ export default function LoginScreen({ navigation }) {
         },
     });
     return (
-        <View style={styles.container}>
+        <View
+            style={[
+                STYLING.loginPageInput,
+                {
+                    paddingTop: '30%',
+                    alignSelf: 'center',
+                    width: '80%',
+                    flex: 1,
+                },
+            ]}
+        >
             <TextInput
-                style={styles.input}
+                style={designSystem().INPUT_FORM.input}
                 value={email}
                 onChangeText={(email) => setEmail(email)}
                 placeholder={'email'}
             />
-
             {/* Added Password show hide functionality in the
-                password input field */}
-            <View style={STYLING.passwordInputContainer}>
+                 password input field */}
+            <View
+                style={[
+                    designSystem().INPUT_FORM.input,
+                    {
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                    },
+                ]}
+            >
                 <TextInput
                     placeholder="Password"
                     value={password}
+                    style={[STYLING.passwordInput, { flex: 3 }]}
                     onChangeText={(password) => setPassword(password)}
-                    style={STYLING.loginPagePasswordInput}
                     secureTextEntry={!showPassword}
                 />
                 <TouchableOpacity
-                    style={STYLING.passwordIconContainer}
+                    style={[
+                        STYLING.passwordIconContainer,
+                        {
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            marginHorizontal: '3%',
+                            height: '100%',
+                        },
+                    ]}
                     onPress={togglePasswordVisibility}
                 >
                     <Icon
@@ -109,62 +137,61 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
             <CustomButton
-                style={styles.button}
-                title="Login"
-                onPress={() => handleLogin()}
+                title={'Login'}
+                onPress={handleLogin}
+                style={[
+                    designSystem().STYLING.primaryButton,
+                    designSystem().STYLING.primaryButtonText,
+                ]}
             />
-            <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text>Can't login? Reset</Text>
-                <TouchableOpacity>
-                    <Text style={{ marginLeft: 2, color: COLOR.MUNCH_RED }}>
-                        password
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-                <DashedLine />
-                <Text>or</Text>
-                <DashedLine />
-            </View>
-            <TouchableOpacity
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    width: 250,
-                    height: 50,
-                    borderColor: 'red',
-                    borderStyle: 'solid',
-                    borderWidth: 0,
-                }}
-            >
-                <Image
-                    style={styles.icon}
-                    source={require('../assets/icons/facebook.png')}
-                />
-                <Image
-                    style={styles.icon}
-                    source={require('../assets/icons/google.png')}
-                />
-                <Image
-                    style={styles.icon}
-                    source={require('../assets/icons/instagram.png')}
-                />
-                <Image
-                    style={styles.icon}
-                    source={require('../assets/icons/apple.png')}
-                />
-            </TouchableOpacity>
-            <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text>Don't have an account?</Text>
-                <TouchableOpacity onPress={() => handleCreateUser()}>
-                    <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>
-                        Sign up
-                    </Text>
-                </TouchableOpacity>
-            </View>
 
-            <Button title="camera" onPress={() => handleOpenCamera()} />
+ <View style={{ flexDirection: 'row' }}>
+        <DashedLine />
+                 <Text>or</Text>
+                 <DashedLine />
+              </View>
+
+              <View>
+              <TouchableOpacity
+                style={{
+                   flexDirection: 'row',
+                   justifyContent: 'space-evenly',
+                   alignItems: 'center',
+                   width: 250,
+                   height: 50,
+                   borderColor: 'red',
+                   borderStyle: 'solid',
+                   borderWidth: 0,
+                }}
+             >
+                <Image
+                   style={STYLING.icon}
+                   source={require('../assets/icons/facebook.png')}
+                />
+                <Image
+                   style={STYLING.icon}
+                   source={require('../assets/icons/google.png')}
+                />
+                <Image
+                   style={STYLING.icon}
+                   source={require('../assets/icons/instagram.png')}
+                />
+                <Image
+                   style={STYLING.icon}
+                   source={require('../assets/icons/apple.png')}
+                />
+             </TouchableOpacity>
+             </View>
+
+              <View style={{ flexDirection: 'row', margin: 20 }}>
+               <Text>Don't have an account?</Text>
+                <TouchableOpacity onPress={() => handleCreateUser()}>
+                   <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>
+                      Sign up
+                   </Text>
+                </TouchableOpacity>
+             </View>
+
         </View>
     );
 }

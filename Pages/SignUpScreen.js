@@ -1,3 +1,17 @@
+/****** TODO 
+
+        Style the signup page
+    
+    []  Add KeyboardAvoidingView
+    []  Add Scrollview
+    []  Add show/hide password to password input
+    []  Make the email and password inputs flash red if the
+        requirements are not met     
+    []  Fix so it's not possible to press submit if the input 
+        fields are empty or does not meet the requirements  
+
+******/
+
 ////////////////////////////////////////////////////////////////
 //  Description: Security Patch
 //  Version: 1.0
@@ -6,6 +20,7 @@
 ///////////////////////////////////////////////////////////////
 
 import React, { useState, useEffect, useContext } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Appcontext } from '../lib/AppContext';
 import {
     StyleSheet,
@@ -14,7 +29,14 @@ import {
     TextInput,
     SafeAreaView,
     Button,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    StatusBar,
+    ScrollView,
 } from 'react-native';
+import designSystem from '../components/style/DesignSystem';
+
+const { COLOR, STYLING } = designSystem();
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
 export default function SignUpScreen({ navigation }) {
@@ -66,48 +88,76 @@ export default function SignUpScreen({ navigation }) {
         setPasswordTooShort(currentPassword.length < 10); //<- check to user, to add less than a certain amount of characters.
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
-        <View style={styles.container}>
-            <View>
-                <TextInput
-                    placeholder="Email"
-                    style={{
-                        ...styles.input,
-                        borderColor: isValidEmail ? 'green' : '#ccc',
-                    }}
-                    value={email}
-                    onChangeText={onChangeEmailHandler}
-                />
-                {!emailContainsAT && (
-                    <Text style={{ color: 'red' }}>
-                        Email should contain '@'.
-                    </Text>
-                )}
+        <KeyboardAvoidingView
+            style={{ flex: 1, backgroundColor: COLOR.WHITE }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={150}
+        >
+            <StatusBar hidden />
+           
+                <View style={STYLING.container}>
+                    <View style={STYLING.signupPageTextInputContainer}>
+                        
+                        <View style={STYLING.signupPageTextInputContainer}>
+                            <TextInput
+                                placeholder="Email"
+                                style={{
+                                    ...STYLING.signupPageEmailInput,
 
-                <TextInput
-                    placeholder="Password"
-                    style={{
-                        ...styles.input,
-                        borderColor: isStrongPassword ? 'green' : '#ccc',
-                    }}
-                    value={password}
-                    onChangeText={onChangePasswordHandler}
-                    secureTextEntry={!showPassword}
-                />
+                                    borderColor: isValidEmail
+                                        ? 'green'
+                                        : COLOR.DARK_GRAY,
+                                }}
+                                value={email}
+                                onChangeText={onChangeEmailHandler}
+                            />
+                            {!emailContainsAT && (
+                                <Text style={{ color: 'red' }}>
+                                    Email should contain '@'.
+                                </Text>
+                            )}
 
-                {passwordTooShort && (
-                    <Text style={{ color: 'red' }}>
-                        Password should be at least 10 characters long.
-                    </Text>
-                )}
-
-                <Button
-                    title={showPassword ? 'Hide' : 'Show'}
-                    onPress={() => onPressToggleHandler()}
-                />
-                <Button title="Submit" onPress={() => onPressSubmitHandler()} />
-            </View>
-        </View>
+                            <View style={STYLING.passwordInputContainer}>
+                                <TextInput
+                                    placeholder="Password"
+                                    style={{
+                                        ...STYLING.signupPagePasswordInput,
+                                        borderColor: isStrongPassword
+                                            ? 'green'
+                                            : '#ccc',
+                                    }}
+                                    value={password}
+                                    onChangeText={onChangePasswordHandler}
+                                    secureTextEntry={!showPassword}
+                                />
+                                <TouchableOpacity
+                                    style={STYLING.passwordIconContainer}
+                                    onPress={togglePasswordVisibility}
+                                >
+                                    <Icon
+                                        name={
+                                            showPassword ? 'eye' : 'eye-slash'
+                                        }
+                                        size={20}
+                                        color="#888"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <TouchableOpacity
+                            style={STYLING.primaryButton}
+                            onPress={onPressSubmitHandler}
+                        >
+                            <Text style={STYLING.buttonText}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+        </KeyboardAvoidingView>
     );
 }
 

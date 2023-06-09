@@ -15,6 +15,9 @@ export default function useFont() {
                     'Munch-Bold': require('../../assets/fonts/GirottMunch-Bold.ttf'),
                     'Munch-Backslant': require('../../assets/fonts/GirottMunch-BoldBackslant.ttf'),
                     'Montserrat': require('../../assets/fonts/Montserrat-VariableFont_wght.ttf'),
+                    'GirottMunch-BoldSlant': require('../../assets/fonts/GirottMunch-BoldSlant.ttf'),
+                    'Helvetica': require('../../assets/fonts/Helvetica-Font/Helvetica.ttf'),
+                    'Helvetica-Bold': require('../../assets/fonts/Helvetica-Font/Helvetica-Bold.ttf'),
                     'Munch-BoldSlant': require('../../assets/fonts/GirottMunch-BoldSlant.ttf'),
                     'HelveticaNeue': require('../../assets/fonts/HelveticaNeueMedium.ttf'),
                 });
