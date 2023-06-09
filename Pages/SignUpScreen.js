@@ -27,16 +27,12 @@ import {
     Text,
     View,
     TextInput,
-    SafeAreaView,
-    Button,
     TouchableOpacity,
     KeyboardAvoidingView,
     StatusBar,
-    ScrollView,
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
-
-const { COLOR, STYLING } = designSystem();
+import CustomButton from '../components/style/CustomButton';
 
 // navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
 export default function SignUpScreen({ navigation }) {
@@ -94,69 +90,82 @@ export default function SignUpScreen({ navigation }) {
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1, backgroundColor: COLOR.WHITE }}
+            style={{ flex: 1, backgroundColor: designSystem().COLOR.MUNCH_WHITE }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={150}
         >
             <StatusBar hidden />
-           
-                <View style={STYLING.container}>
-                    <View style={STYLING.signupPageTextInputContainer}>
-                        
-                        <View style={STYLING.signupPageTextInputContainer}>
-                            <TextInput
-                                placeholder="Email"
-                                style={{
-                                    ...STYLING.signupPageEmailInput,
 
-                                    borderColor: isValidEmail
-                                        ? 'green'
-                                        : COLOR.DARK_GRAY,
-                                }}
-                                value={email}
-                                onChangeText={onChangeEmailHandler}
-                            />
-                            {!emailContainsAT && (
-                                <Text style={{ color: 'red' }}>
-                                    Email should contain '@'.
-                                </Text>
-                            )}
+            <View style={designSystem().STYLING.container}>
+                <View style={designSystem().STYLING.signupPageTextInputContainer}>
 
-                            <View style={STYLING.passwordInputContainer}>
-                                <TextInput
-                                    placeholder="Password"
-                                    style={{
-                                        ...STYLING.signupPagePasswordInput,
-                                        borderColor: isStrongPassword
-                                            ? 'green'
-                                            : '#ccc',
-                                    }}
-                                    value={password}
-                                    onChangeText={onChangePasswordHandler}
-                                    secureTextEntry={!showPassword}
-                                />
-                                <TouchableOpacity
-                                    style={STYLING.passwordIconContainer}
-                                    onPress={togglePasswordVisibility}
-                                >
-                                    <Icon
-                                        name={
-                                            showPassword ? 'eye' : 'eye-slash'
-                                        }
-                                        size={20}
-                                        color="#888"
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <TouchableOpacity
-                            style={STYLING.primaryButton}
-                            onPress={onPressSubmitHandler}
+                    <View style={designSystem().STYLING.signupPageTextInputContainer}>
+                        <TextInput
+                            placeholder="Email"
+                            style={[
+                                designSystem().INPUT_FORM.input
+                                // ...STYLING.signupPageEmailInput,
+                                //
+                                // borderColor: isValidEmail
+                                //     ? 'green'
+                                //     : COLOR.DARK_GRAY,
+                            ]}
+                            value={email}
+                            onChangeText={onChangeEmailHandler}
+                        />
+                        {!emailContainsAT && (
+                            <Text style={{ color: 'red' }}>
+                                Email should contain '@'.
+                            </Text>
+                        )}
+
+
+                        <View
+                            style={[
+                                designSystem().INPUT_FORM.input,
+                                {
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                },
+                            ]}
                         >
-                            <Text style={STYLING.buttonText}>Submit</Text>
-                        </TouchableOpacity>
+                            <TextInput
+                                placeholder="Password"
+                                value={password}
+                                style={[designSystem().STYLING.passwordInput, { flex: 3 }]}
+                                onChangeText={onChangePasswordHandler}
+                                secureTextEntry={!showPassword}
+                            />
+                            <TouchableOpacity
+                                style={[
+                                    designSystem().STYLING.passwordIconContainer,
+                                    {
+                                        alignSelf: 'center',
+                                        justifyContent: 'center',
+                                        marginHorizontal: '3%',
+                                        height: '100%',
+                                    },
+                                ]}
+                                onPress={togglePasswordVisibility}
+                            >
+                                <Icon
+                                    name={showPassword ? 'eye' : 'eye-slash'}
+                                    size={20}
+                                    color="#888"
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
+                    <CustomButton
+                        title={"Submit"}
+                        onPress={onPressSubmitHandler}
+                        style={[
+                            designSystem().STYLING.primaryButton
+                        ]}
+                    />
                 </View>
+            </View>
         </KeyboardAvoidingView>
     );
 }
