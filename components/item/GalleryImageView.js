@@ -14,6 +14,11 @@ export default function GalleryImageView({ reward, onNavigate }) {
       <Pressable onPress={() => onNavigate()}>
          <Image
             source={image}
+            style={{
+               width: '100%',
+               height: undefined,
+               aspectRatio: 1,
+            }}
          />
          <Text>{reward.title}</Text>
       </Pressable>

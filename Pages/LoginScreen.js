@@ -193,32 +193,5 @@ export default function LoginScreen({ navigation }) {
              </View>
 
         </View>
-
-       
-
-           
-        // </View>
-
-        //    <TouchableOpacity  style={STYLING.primaryButton} onPress={() => handleLogin()}>
-        //       <Text style={STYLING.primaryButtonText} >Login</Text>
-        //    </TouchableOpacity>
-        //    <View style={{ flexDirection: 'row', margin: 20 }}>
-        //       <Text>Can't login? Reset</Text>
-        //       <TouchableOpacity>
-        //          <Text style={{ marginLeft: 2, color: COLOR.MUNCH_RED }}>
-        //             password
-        //          </Text>
-        //       </TouchableOpacity>
-        //    </View>
-         //   <View style={{ flexDirection: 'row' }}>
-         //       <DashedLine />
-         //       <Text>or</Text>
-         //       <DashedLine />
-         //    </View>
-         //   
-           
-
-       //     <Button title="camera" onPress={() => handleOpenCamera()} />
-        // </View>
     );
 }

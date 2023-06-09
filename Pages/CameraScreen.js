@@ -15,11 +15,12 @@ export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [activeItem, setActiveItem] = useState('N/A');
-    const [activQuest, setActivQuest] = useState('');
     const [activeItemId, setActiveItemId] = useState(0);
+    const [activeQuest, setActiveQuest] = useState('');
+
     const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map());
-    const [reward, setReward] = useState('');
+    const [reward, setReward] = useState(false);
     const [showQuestProgress, setShowQuestProgress] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showReward, setShowReward] = useState(false);
@@ -32,8 +33,6 @@ export default function CameraScreen() {
     const textContainerRef = useRef < View > null;
     const textRef = useRef < Text > null;
     onLayout = (e) => {
-        console.log(e.nativeEvent.layout.x);
-        console.log(imageX);
         setImageXOffset(e.nativeEvent.layout.x);
         setImageYOffset(e.nativeEvent.layout.y);
     };
@@ -69,7 +68,7 @@ export default function CameraScreen() {
         try {
             data = await getAllQuest();
         } catch (error) {
-            console.log(error);
+            console.log('error in get all items', error);
         }
 
         const serverQuestItem = new Map();
@@ -96,6 +95,7 @@ export default function CameraScreen() {
         setImageY(bounds['origin'].y);
         setImageHeight(bounds['size'].height);
         setImageWidth(bounds['size'].width);
+
         let foundObject = null;
 
         /* setTimeout(function () {
@@ -106,30 +106,28 @@ export default function CameraScreen() {
             foundObject = await JSON.parse(data);
             if (foundObject) {
                 setActiveItem(foundObject.name);
-                setActivQuest(foundObject.quest);
-                setActiveItemId(foundObject.item);
             }
+        } catch (error) {
+            console.log('scanned Wrong item ', error);
+        }
+        if (foundObject) {
+            setActiveItem(foundObject.name);
+            setActiveItemId(foundObject.item);
+            setActiveQuest(foundObject.quest);
 
             let currentQuests = new Map(quests);
-
             if (!currentQuests.get(foundObject.name)) {
             } else {
-                console.log('here');
                 let quest = currentQuests.get(foundObject.name);
                 let found = quest.collected.find((item) => {
                     return item == foundObject.item;
                 });
-                console.log('here', found);
                 if (found) {
                     console.log('got here');
                     setActiveItem('N/A');
-                    setActivQuest('');
-                    setActiveItemId(0);
                     setScanned(false);
                 }
             }
-        } catch (error) {
-            console.log('scanned Wrong item ', error);
         }
     };
     /**
@@ -148,7 +146,6 @@ export default function CameraScreen() {
         setImageY(bounds['origin'].y);
         setImageHeight(bounds['size'].height);
         setImageWidth(bounds['size'].width);
-        console.log(bounds);
         setScanned(true);
         let foundObject = null;
         try {
@@ -161,14 +158,12 @@ export default function CameraScreen() {
         // Returning the current scanned image require ID
         ////////////////////////////////////////////////////
         if (foundObject) {
-            console.log('fund object', foundObject.name);
             setActiveItem(foundObject.name);
-            setActivQuest(foundObject.quest);
             setActiveItemId(foundObject.item);
+            setActiveQuest(foundObject.quest);
         } else {
             setScanned(false);
             setActiveItem('N/A');
-            setActiveItemId(0);
 
             return;
         }
@@ -182,16 +177,22 @@ export default function CameraScreen() {
         } else {
             let quest = currentQuests.get(foundObject.name);
             let found = quest.collected.find((item) => {
-                item.name == foundObject.name;
+                console.log(item);
+                return item == foundObject.item;
             });
             if (found) {
                 console.log('got here');
+                console.log('got here');
                 setActiveItem('N/A');
-                setActivQuest('');
-                setActiveItemId(0);
                 setScanned(false);
+
+                setActiveItemId(0);
+                setActiveQuest('');
             }
         }
+
+        // TODO: Modal or alert?
+        //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
     };
 
     const scannedImage = allItemsFromAssets.find(
@@ -204,26 +205,44 @@ export default function CameraScreen() {
     ////////////////////////////////
     // Conditional rendering
     ////////////////////////////////
-    if (hasPermission === null) {
+    /* if (hasPermission === null) {
         return <Text>ARtQuest is asking for camera permission</Text>;
     }
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
-    }
-    if (showReward) {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    setShowReward(false);
-                    setActiveItem('N/A');
-                }}
-                style={styles.itemContainer}
-            >
-                <Text>Your rewward is </Text>
-            </TouchableOpacity>
-        );
-    }
+    } */
+    const pressedItem = async () => {
+        console.log('getting here?');
 
+        try {
+            console.log('activeQuest', activeQuest, activeItemId);
+            let serverData;
+            try {
+                serverData = await sendItem({
+                    quest: activeQuest,
+                    item: activeItemId,
+                });
+            } catch (error) {
+                console.log('error in req', serverData);
+            }
+
+            console.log('serverdata', serverData);
+            console.log('activeItem', activeItem);
+            let currentQuests = new Map(quests);
+            const tempQuest = currentQuests.get(activeItem);
+            tempQuest.collected = serverData.collected;
+            tempQuest.size = serverData.size;
+            if (condition) {
+            }
+            currentQuests.set(activeItem, tempQuest);
+            setQuests(currentQuests);
+            setScanned(false);
+        } catch (error) {
+            console.log('new EROROR', error);
+        }
+
+        setShowQuestProgress(true);
+    };
     return (
         <View style={styles.container}>
             <BarCodeScanner
@@ -234,27 +253,7 @@ export default function CameraScreen() {
             />
             <TouchableOpacity
                 onLayout={onLayout}
-                onPress={async () => {
-                    try {
-                        const serverData = await sendItem({
-                            quest: activQuest,
-                            item: activeItemId,
-                        });
-                        let currentQuests = new Map(quests);
-                        const tempQuest = currentQuests.get(activeItem);
-                        tempQuest.collected = serverData.collected;
-                        tempQuest.size = serverData.size;
-                        currentQuests.set(activeItem, tempQuest);
-                        setQuests(currentQuests);
-                        setScanned(false);
-                        setActiveItem('N/A');
-                        setShowQuestProgress(true);
-                        setActivQuest('');
-                        setActiveItemId(0);
-                    } catch (error) {
-                        console.log('new EROROR', error);
-                    }
-                }}
+                onPress={pressedItem}
                 style={styles.itemContainer}
             >
                 {activeItem != 'N/A' && scanned && (
@@ -276,9 +275,11 @@ export default function CameraScreen() {
                     setShowQuestProgress={setShowQuestProgress}
                     setActiveItem={setActiveItem}
                     activeItem={activeItem}
+                    setReward
                     image={scannedImage}
                 />
             )}
+            {showReward && <Text>hh</Text>}
         </View>
     );
 }

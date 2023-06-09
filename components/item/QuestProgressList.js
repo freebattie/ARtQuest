@@ -1,20 +1,14 @@
 import {
-    FlatList,
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Text,
+   FlatList,
+   View,
+   StyleSheet,
+   TouchableOpacity,
+   Text,
 } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import useGetAllQuest from '../hooks/useGetAllQuest';
 import QuestProgressCard from './QuestProgressCard';
-import dummy from './dummy.json';
-import { v4 as ID } from 'uuid';
-
-
-
-
-
+import { Appcontext } from '../../lib/AppContext';
+import designSystem from "../style/DesignSystem";
 
 /**
  * Functional Component that will make a request to server to fetch necessarily data.
@@ -24,39 +18,50 @@ import { v4 as ID } from 'uuid';
  * @returns A lazy list that will only render visible cards
  */
 export default function QuestProgressList() {
-    
-    // useGetAllQuest is refactoring data fetching logic into own component
-    const quests = useGetAllQuest();
+   // useGetAllQuest is refactoring data fetching logic into own component
+   const { getAllQuest } = useContext(Appcontext);
+   const [loading, setloading] = useState(false);
+   const UsegetAllQuest = async () => {
+      const data = await getAllQuest();
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={quests}
-                keyExtractor={() => ID()}
-                renderItem={({ item }) => {
-                    const divide = item.galleryname.split(': ');
-                    const artist = divide[1].split(' ')[0];
-                    const theme = divide[1].split(' ')[1].padStart(2);
+      setQuests(data);
+      setloading(true);
+   };
+   const [quests, setQuests] = useState([]);
+   useEffect(() => {
+      UsegetAllQuest();
+   }, []);
+   if (loading) {
+      <Text>LOADING..</Text>;
+   }
+   return (
+      <View style={styles.container}>
+         <FlatList
+            data={quests}
+            renderItem={({ item }) => {
+               const divide = item.galleryname.split(': ');
+               const artist = divide[1].split(' ')[0];
+               const theme = divide[1].split(' ')[1].padStart(2);
 
-                    return (
-                        <TouchableOpacity activeOpacity={0.75}>
-                            <QuestProgressCard
-                                key={() => ID()}
-                                artist={artist}
-                                theme={" ".concat(theme)}
-                                size={item.size}
-                                collected={item.collected.length}
-                            />
-                        </TouchableOpacity>
-                    );
-                }}
-            />
-        </View>
-    );
+               return (
+                  <TouchableOpacity activeOpacity={0.75}>
+                     <QuestProgressCard
+                        key={1}
+                        artist={artist}
+                        theme={' '.concat(theme)}
+                        size={item.size}
+                        collected={item.collected.length}
+                     />
+                  </TouchableOpacity>
+               );
+            }}
+         />
+      </View>
+   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+   container: {
+      flex: 1,
+   },
 });
