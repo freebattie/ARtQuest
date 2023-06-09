@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import designSystem from '../style/DesignSystem';
 
 /**
  *
@@ -35,6 +36,9 @@ export default function QuestProgressItem({
         <TouchableOpacity
             style={[
                 styles.container,
+                {
+                    backgroundColor: designSystem().COLOR.MUNCH_NAVY
+                },
                 isPressed ? styles.containerPressed : null,
             ]}
             activeOpacity={1}
@@ -44,14 +48,35 @@ export default function QuestProgressItem({
             <Image source={image['src']} style={styles.image} />
             <Text
                 style={[
+                    designSystem().TEXT_STYLES.headline,
                     styles.containerText,
                     isPressed ? styles.containerTextPressed : null,
                 ]}
             >
-                QuestProgressItem
+                You found
             </Text>
-            <Text style={styles.containerText}>
+            <Text
+                style={[
+                    designSystem().TEXT_STYLES.headline,
+                    styles.containerText,
+                    isPressed ? styles.containerTextPressed : null,
+                ]}
+            >
+                an item!
+            </Text>
+            <Text style={[
+                designSystem().TEXT_STYLES.text,
+                styles.containerText
+            ]}>
                 {collected.length}/{size}
+            </Text>
+            <Text
+                style={[
+                    designSystem().TEXT_STYLES.text,
+                    styles.containerText
+                ]}
+            >
+                continue
             </Text>
         </TouchableOpacity>
     );
@@ -66,7 +91,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 5,
-        backgroundColor: '#0f2335',
     },
     containerPressed: {
         backgroundColor: '#ccc',
