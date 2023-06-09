@@ -69,12 +69,11 @@ export default function designSystem() {
 
     const INPUT_FORM = StyleSheet.create({
         input: {
-            width: '50%',
+            width: '100%',
             height: 40,
             borderColor: '#ccc',
             borderWidth: 1,
             borderRadius: 5,
-            paddingHorizontal: 10,
             marginBottom: 10,
         },
     });
@@ -102,16 +101,17 @@ export default function designSystem() {
         
 
         primaryButton: {
-            width: 'auto',
+
+            maxWidth: '100%',
             backgroundColor: COLOR.MUNCH_RED,
             paddingHorizontal: 20,
-            paddingVertical: 10,
+            paddingVertical: 5,
             marginBottom: 10,
         },
         primaryButtonText: {
             color: COLOR.MUNCH_WHITE,
-            fontFamily: 'Montserrat',
-            fontSize: 18,
+            fontFamily: 'Helvetica',
+            fontSize: 22,
             fontWeight: 'bold',
             textAlign: 'center',
         },
@@ -185,6 +185,7 @@ export default function designSystem() {
             top: 25,
         },
         loginPageInput: {
+            display: 'flex',
             width: '80%',
             height: 40,
             borderWidth: 1,
@@ -198,11 +199,11 @@ export default function designSystem() {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            width: 250,
+            width: '80%',
             marginTop: 50,
         },
         loginPagePasswordInput: {
-            width: 150,
+            width: '100%',
             height: 30,
             borderWidth: 0,
             borderColor: 'rgba(50, 50, 50, 1)',
@@ -235,7 +236,6 @@ export default function designSystem() {
             borderWidth: 1.4,
             paddingHorizontal: 10,
             marginBottom: 10,
-            width: '70%',
         },
 
         passwordIconContainer: {
@@ -254,7 +254,7 @@ export default function designSystem() {
         },
 
         signupPageEmailInput: {
-            width: '95%',
+            width: '100%',
             height: 40,
             borderWidth: 1,
             borderColor: COLOR.WHITE,
@@ -264,7 +264,7 @@ export default function designSystem() {
             paddingLeft: 15,
         },
 
-        signupPagePasswordInput: {
+        passwordInput: {
             width: '80%',
             height: 30,
             borderWidth: 0,
