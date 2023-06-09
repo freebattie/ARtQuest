@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 /**
@@ -9,16 +9,28 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
  */
 export default function QuestProgressItem({
     quests,
-    activeItem,
     setActiveItem,
+    activeItem,
     setShowQuestProgress,
     image,
 }) {
     const [isPressed, setIsPressed] = useState(false);
+    const [isReward, setIsReward] = useState(false);
 
     const quest = quests.get(activeItem);
     const { name, size, collected } = quest;
     console.log(quest);
+
+
+    useEffect(() => {
+        if (collected.length === size) {
+            setIsReward(true);
+        } else {
+            setIsReward(false);
+        }
+    }, [collected.length, size])
+
+
     const onPressInHandler = () => {
         setIsPressed(true);
         console.log(isPressed);
@@ -31,6 +43,10 @@ export default function QuestProgressItem({
         setActiveItem('N/A');
         console.log(isPressed);
     };
+
+
+
+
     return (
         <TouchableOpacity
             style={[
@@ -41,18 +57,30 @@ export default function QuestProgressItem({
             onPressIn={() => onPressInHandler()}
             onPressOut={() => onPressOutHandler()}
         >
-            <Image source={image['src']} style={styles.image} />
-            <Text
-                style={[
-                    styles.containerText,
-                    isPressed ? styles.containerTextPressed : null,
-                ]}
-            >
-                QuestProgressItem
-            </Text>
-            <Text style={styles.containerText}>
-                {collected.length}/{size}
-            </Text>
+            { isReward ?
+                (
+                    <>
+                        <Image source={image['src']} style={styles.image} />
+                        <Text
+                            style={[
+                                styles.containerText,
+                                isPressed ? styles.containerTextPressed : null,
+                            ]}
+                        >
+                            QuestProgressItem
+                        </Text>
+                        <Text style={styles.containerText}>
+                            {collected.length}/{size}
+                        </Text>
+                    </>
+                ) :
+                (
+                    <>
+                        <Text>Reward</Text>
+                    </>
+                )
+
+            }
         </TouchableOpacity>
     );
 }
