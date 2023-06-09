@@ -113,11 +113,11 @@ export default function SignUpScreen({ navigation }) {
                             value={email}
                             onChangeText={onChangeEmailHandler}
                         />
-                        {!emailContainsAT && (
-                            <Text style={{ color: 'red' }}>
-                                Email should contain '@'.
-                            </Text>
-                        )}
+                        {/* {!emailContainsAT && ( */}
+                        {/*     <Text style={{ color: 'red' }}> */}
+                        {/*         Email should contain '@'. */}
+                        {/*     </Text> */}
+                        {/* )} */}
 
 
                         <View
@@ -156,14 +156,17 @@ export default function SignUpScreen({ navigation }) {
                                 />
                             </TouchableOpacity>
                         </View>
+                        <CustomButton
+                            title={"Submit"}
+                            onPress={onPressSubmitHandler}
+                            style={[
+                                designSystem().STYLING.primaryButton,
+                                {
+                                    width: '100%',
+                                }
+                            ]}
+                        />
                     </View>
-                    <CustomButton
-                        title={"Submit"}
-                        onPress={onPressSubmitHandler}
-                        style={[
-                            designSystem().STYLING.primaryButton
-                        ]}
-                    />
                 </View>
             </View>
         </KeyboardAvoidingView>

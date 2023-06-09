@@ -72,7 +72,7 @@ export default function designSystem() {
             height: 40,
             borderColor: '#ccc',
             borderWidth: 1,
-            borderRadius: 5,
+            borderRadius: 0,
             marginBottom: 10,
         },
     });
