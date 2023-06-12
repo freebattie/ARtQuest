@@ -128,7 +128,7 @@ export default function Collections({ navigation }) {
                     title="Gallery"
                     onPress={() => setIsSelected(false)}
                     style={[
-                        designSystem().STYLING.primaryButtonText,
+                        designSystem().STYLING.primaryButton,
                         {
                             position: 'absolute',
                             bottom: 0,

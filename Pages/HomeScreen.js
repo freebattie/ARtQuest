@@ -14,15 +14,15 @@ export default function HomeScreen({ navigation }) {
                 title="Play"
                 onPress={() => navigation.navigate('CameraScreen')}
             />
-            <Button
+            <CustomButton
                 title="Quests"
                 onPress={() => navigation.navigate('QuestsScreen')}
             />
-            <Button
-                title="Collections"
+            <CustomButton
+                title="Show Collections"
                 onPress={() => navigation.navigate('CollectionsScreen')}
             />
-            <Button
+            <CustomButton
                 title="Logout"
                 onPress={() => navigation.navigate('LoginScreen')}
             />
