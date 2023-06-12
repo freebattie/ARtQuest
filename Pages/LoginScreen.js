@@ -19,7 +19,7 @@ import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const { COLOR, STYLING } = designSystem();
+const { COLOR } = designSystem();
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('test@test.no');

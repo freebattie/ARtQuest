@@ -28,15 +28,16 @@ const Tab = createBottomTabNavigator();
 // Tab Icon
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function App() {
-    const { COLOR, PRIMARY, STACK_NAV_HEADER } = DesignSystem();
+    const { STACK_NAV_HEADER } = DesignSystem();
     const options = STACK_NAV_HEADER;
     const isFontLoaded = useFont();
-    const BottomTab = createBottomTabNavigator();
 
     ////////////////////////////////////////////////////////////////////////
     // Font has to be loaded before the app can be rendered
+    // Status bar hides phone status bar and RootNavigator is refactored
     if (isFontLoaded) {
         return (
             <SafeAreaProvider>
@@ -52,7 +53,7 @@ export default function App() {
 }
 
 /**
- *
+ * A refactoring of StackNavigator that will handle all the screen routing
  * @returns a root navigator that will render the screen in chronological order
  */
 function RootNavigator({ options }) {
@@ -98,27 +99,27 @@ function BottomNavigator() {
     return (
         <Tab.Navigator initialRouteName="LoginScreen">
             <Tab.Screen
-                name="1"
+                name="Camera"
                 component={CameraScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
-                        <FontAwesome name="home" size={size} color={color} />
+                        <FontAwesome name="qrcode" size={size} color={color} />
                     ),
                 }}
             />
             <Tab.Screen
-                name="2"
+                name="Collection"
                 component={CollectionsScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
-                        <FontAwesome name="home" size={size} color={color} />
+                        <MaterialIcons name="collections" size={size} color={color} />
                     ),
                 }}
             />
             <Tab.Screen
-                name="3"
+                name="Quest"
                 component={QuestsScreen}
                 options={{
                     headerShown: false,

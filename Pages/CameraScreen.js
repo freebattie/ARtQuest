@@ -1,7 +1,6 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect, useContext, useRef } from 'react';
 import {
-    Button,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -10,8 +9,12 @@ import {
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import QuestProgressItem from '../components/item/QuestProgressModal';
-import designSystem from '../components/style/DesignSystem';
 
+
+/**
+ * Camera screen is a "page" for application to scan QR codes.
+ * It will display objects and quest progress.
+ */
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -33,6 +36,9 @@ export default function CameraScreen() {
     const [imageWidth, setImageWidth] = useState(0);
     const textContainerRef = useRef < View > null;
     const textRef = useRef < Text > null;
+
+    // Finding the parent offset view that is a container for the image display.
+    // The offset is an absolute position within the container.
     onLayout = (e) => {
         setImageXOffset(e.nativeEvent.layout.x);
         setImageYOffset(e.nativeEvent.layout.y);
@@ -55,6 +61,7 @@ export default function CameraScreen() {
         },
     ]);
 
+    // Getting permission from user to use the camera
     useEffect(() => {
         // Getting permission from user
         const getBarCodeScannerPermissions = async () => {
@@ -64,6 +71,8 @@ export default function CameraScreen() {
         // Side effect
         getBarCodeScannerPermissions();
     }, []);
+
+    // HTTP request to the server to get all items
     const getAllItems = async () => {
         let data;
         try {
@@ -83,6 +92,8 @@ export default function CameraScreen() {
         }
         setQuests(serverQuestItem);
     };
+
+    // Making sure the data is loaded before rendering
     useEffect(() => {
         getAllItems();
         setLoading(false);
@@ -91,6 +102,7 @@ export default function CameraScreen() {
         setScanned(false);
     };
 
+    // Updating the image location and size
     const handelUpdateImageLocation = async ({ bounds, data }) => {
         setImageX(bounds['origin'].x);
         setImageY(bounds['origin'].y);
@@ -131,17 +143,11 @@ export default function CameraScreen() {
             }
         }
     };
-    /**
-     *
-     * @param {what type QR} type
-     *  @param {Data in the QR code} data
-     * @returns
-     */
+
+    // The initial scan of the QR code to verify and validate if it's a valid quest object
     const handleBarCodeScanned = async ({
-        type,
         data,
         bounds,
-        cornerPoints,
     }) => {
         setImageX(bounds['origin'].x);
         setImageY(bounds['origin'].y);
@@ -169,21 +175,15 @@ export default function CameraScreen() {
             return;
         }
 
-        // TODO: Modal or alert?
-        //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
         setActiveItem(foundObject.name);
-        let serverData = {};
         let currentQuests = new Map(quests);
         if (!currentQuests.get(foundObject.name)) {
         } else {
             let quest = currentQuests.get(foundObject.name);
             let found = quest.collected.find((item) => {
-                console.log(item);
                 return item == foundObject.item;
             });
             if (found) {
-                console.log('got here');
-                console.log('got here');
                 setActiveItem('N/A');
                 setScanned(false);
 
@@ -192,8 +192,6 @@ export default function CameraScreen() {
             }
         }
 
-        // TODO: Modal or alert?
-        //alert(`Bar code with type ${type}\nData ${data} has been scanned!`);
     };
 
     const scannedImage = allItemsFromAssets.find(
@@ -203,20 +201,21 @@ export default function CameraScreen() {
     if (loading) {
         return <Text>LOADINNG FROM SERVER</Text>;
     }
+
     ////////////////////////////////
     // Conditional rendering
     ////////////////////////////////
-    /* if (hasPermission === null) {
+     if (hasPermission === null) {
         return <Text>ARtQuest is asking for camera permission</Text>;
     }
     if (hasPermission === false) {
         return <Text>Permission denied</Text>;
-    } */
-    const pressedItem = async () => {
-        console.log('getting here?');
+    }
+
+
+    const pickedUpItem = async () => {
 
         try {
-            console.log('activeQuest', activeQuest, activeItemId);
             let serverData;
             try {
                 serverData = await sendItem({
@@ -227,14 +226,11 @@ export default function CameraScreen() {
                 console.log('error in req', serverData);
             }
 
-            console.log('serverdata', serverData);
-            console.log('activeItem', activeItem);
             let currentQuests = new Map(quests);
             const tempQuest = currentQuests.get(activeItem);
             tempQuest.collected = serverData.collected;
             tempQuest.size = serverData.size;
-            if (condition) {
-            }
+
             currentQuests.set(activeItem, tempQuest);
             setQuests(currentQuests);
             setScanned(false);
@@ -259,7 +255,7 @@ export default function CameraScreen() {
             />
             <TouchableOpacity
                 onLayout={onLayout}
-                onPress={pressedItem}
+                onPress={pickedUpItem}
                 style={styles.itemContainer}
             >
                 {activeItem != 'N/A' && scanned && (
