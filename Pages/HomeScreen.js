@@ -4,7 +4,7 @@
 //  Author: Bjarte
 //  co-Author: Rolf, Rebekka, Jack, Michael, Gabriel
 ///////////////////////////////////////////////////////////////
-import React, { useState } from 'react';
+import React from 'react';
 import {
    StyleSheet,
    Text,
@@ -12,7 +12,6 @@ import {
    Image
 } from 'react-native';
 import CustomButton from '../components/style/CustomButton';
-import designSystem from '../components/style/DesignSystem';
 
 /**
  * shows the main menu

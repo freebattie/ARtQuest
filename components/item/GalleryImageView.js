@@ -1,9 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
-    View,
     Text,
-    TouchableOpacity,
-    StyleSheet,
     Image,
     Pressable,
 } from 'react-native';

@@ -11,7 +11,6 @@ import {
     View,
     ScrollView,
     Image,
-    Button,
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import GalleryImageView from '../components/item/GalleryImageView';
