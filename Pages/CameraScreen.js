@@ -30,7 +30,6 @@ export default function CameraScreen() {
 
     const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map());
-    const [reward, setReward] = useState(false);
     const [showQuestProgress, setShowQuestProgress] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showReward, setShowReward] = useState(false);
@@ -40,8 +39,6 @@ export default function CameraScreen() {
     const [imageYOffset, setImageYOffset] = useState(0);
     const [imageHeight, setImageHeight] = useState(0);
     const [imageWidth, setImageWidth] = useState(0);
-    const textContainerRef = useRef < View > null;
-    const textRef = useRef < Text > null;
 
     // Finding the parent offset view that is a container for the image display.
     // The offset is an absolute position within the container.
@@ -104,9 +101,6 @@ export default function CameraScreen() {
         getAllItems();
         setLoading(false);
     }, []);
-    const noQRCode = () => {
-        setScanned(false);
-    };
 
     // Updating the image location and size
     const handelUpdateImageLocation = async ({ bounds, data }) => {
@@ -204,6 +198,8 @@ export default function CameraScreen() {
         (item) => item.name == activeItem
     );
 
+    console.log("scannedImage is ", scannedImage);
+
     if (loading) {
         return <Text>LOADINNG FROM SERVER</Text>;
     }
@@ -211,7 +207,7 @@ export default function CameraScreen() {
     ////////////////////////////////
     // Conditional rendering
     ////////////////////////////////
-     if (hasPermission === null) {
+    if (hasPermission === null) {
         return <Text>ARtQuest is asking for camera permission</Text>;
     }
     if (hasPermission === false) {
