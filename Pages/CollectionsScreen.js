@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////
+//  Description: Collection Screen
+//  Version: 1.0
+//  Author: Michael
+//  co-Author: Bjarte
+///////////////////////////////////////////////////////////////
 import React, { useContext, useEffect, useState } from 'react';
 import {
     StyleSheet,
@@ -5,7 +11,6 @@ import {
     View,
     ScrollView,
     Image,
-    Button,
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import GalleryImageView from '../components/item/GalleryImageView';

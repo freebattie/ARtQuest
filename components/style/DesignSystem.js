@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 export default function designSystem() {
     ////////////////////////////////////////////////////////////////////////
@@ -74,6 +74,8 @@ export default function designSystem() {
             borderWidth: 1,
             borderRadius: 0,
             marginBottom: 10,
+            fontFamily: 'Montserrat',
+            fontWeight: '700',
         },
     });
 

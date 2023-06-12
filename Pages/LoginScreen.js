@@ -1,5 +1,9 @@
-// TODO fix KeyboardAvoidingView
-
+////////////////////////////////////////////////////////////////
+//  Description: Login screen
+//  Version: 1.0
+//  Author: Jack
+//  co-Author: Gabriel
+///////////////////////////////////////////////////////////////
 import React, { useContext, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,7 +23,7 @@ import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const { COLOR, STYLING } = designSystem();
+const { COLOR } = designSystem();
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('test@test.no');

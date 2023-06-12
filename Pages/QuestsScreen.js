@@ -1,10 +1,12 @@
+////////////////////////////////////////////////////////////////
+//  Description: Quest screen
+//  Version: 1.0
+//  Author: Bjarte
+//  Co-author: Jack
+///////////////////////////////////////////////////////////////
 import {
     StyleSheet,
-    Text,
     View,
-    TextInput,
-    SafeAreaView,
-    Button,
 } from 'react-native';
 import QuestProgressList from "../components/item/QuestProgressList";
 import designSystem from "../components/style/DesignSystem";
@@ -16,7 +18,14 @@ import CustomButton from '../components/style/CustomButton';
 
 
 
-
+/**
+ * QuestScreen is rendering a typical List-item pattern in react.
+ * A list is rendering all items from the server.
+ * Item is a card view component.
+ * 
+ * @param {*} navigation prop is provided by StackNavigator inside App.js in case you need to route forward.
+ * @returns A Quest progression "page" that allows user to see their quests progression.
+ */
 export default function QuestsScreen({ navigation }) {
 
 

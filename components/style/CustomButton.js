@@ -6,7 +6,7 @@ import DesignSystem from './DesignSystem';
 
 
 
-const { COLOR, STYLING } = DesignSystem();
+const { STYLING } = DesignSystem();
 ////////////////////////////////////////////////////////////////
 // If no props are provided, the default styles is applied
 export default function CustomButton({ title, onPress, style }) {

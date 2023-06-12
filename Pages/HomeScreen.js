@@ -1,5 +1,17 @@
+////////////////////////////////////////////////////////////////
+//  Description: Home screen
+//  Version: 1.0
+//  Author: Bjarte
+//  co-Author: Rolf, Rebekka, Jack, Michael, Gabriel
+///////////////////////////////////////////////////////////////
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import {
+   StyleSheet,
+   Text,
+   View,
+   Image
+} from 'react-native';
+import CustomButton from '../components/style/CustomButton';
 
 /**
  * shows the main menu
