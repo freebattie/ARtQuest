@@ -1,3 +1,12 @@
+/** #======================================================#
+*  #    Program or program file : QuestProgressList.js
+*  #    Description: List of quest progress
+*  #    Author: Jack
+*  #    Co-author: Bjarte
+*  #    Date: 8 June 2023
+*  #    Version 1.0
+*  #======================================================#
+* */
 import {
    FlatList,
    View,
@@ -35,7 +44,7 @@ export default function QuestProgressList() {
       <Text>LOADING..</Text>;
    }
    return (
-      <View style={styles.container}>
+      <View style={designSystem().CONTAINERS.container}>
          <FlatList
             data={quests}
             renderItem={({ item }) => {
@@ -60,8 +69,3 @@ export default function QuestProgressList() {
    );
 }
 
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-   },
-});
