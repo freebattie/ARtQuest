@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    SafeAreaView,
-    Button,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
+/**
+ * shows the main menu
+ * @param navigation used to navigate between pages
+ *
+ */
 export default function HomeScreen({ navigation }) {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
     return (
         <View style={styles.container}>
             <Text>Main Menu</Text>
