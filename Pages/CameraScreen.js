@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import QuestProgressItem from '../components/item/QuestProgressModal';
+import designSystem from '../components/style/DesignSystem';
 
 export default function CameraScreen() {
     const [hasPermission, setHasPermission] = useState(null);
@@ -244,12 +245,17 @@ export default function CameraScreen() {
         setShowQuestProgress(true);
     };
     return (
-        <View style={styles.container}>
+        <View style={[
+            // designSystem().CONTAINERS.container,
+            styles.container,
+        ]}>
             <BarCodeScanner
                 onBarCodeScanned={
                     scanned ? handelUpdateImageLocation : handleBarCodeScanned
                 }
-                style={StyleSheet.absoluteFillObject}
+                style={
+                    StyleSheet.absoluteFillObject
+                }
             />
             <TouchableOpacity
                 onLayout={onLayout}

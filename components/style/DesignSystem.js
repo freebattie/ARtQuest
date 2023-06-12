@@ -72,7 +72,7 @@ export default function designSystem() {
             height: 40,
             borderColor: '#ccc',
             borderWidth: 1,
-            borderRadius: 5,
+            borderRadius: 0,
             marginBottom: 10,
         },
     });
@@ -90,6 +90,7 @@ export default function designSystem() {
         title: {
             fontFamily: 'Munch-Backslant',
             fontSize: 48,
+            textAlign: 'center'
         },
         headline: {
             fontFamily: 'Munch-Bold',
@@ -128,8 +129,7 @@ export default function designSystem() {
             paddingHorizontal: 20,
             paddingVertical: 5,
             marginBottom: 10,
-        },
-        primaryButtonText: {
+
             color: COLOR.MUNCH_WHITE,
             fontFamily: 'Helvetica',
             fontSize: 22,
