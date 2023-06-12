@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////
+//  Description: Collection Screen
+//  Version: 1.0
+//  Author: Michael
+//  co-Author: Bjarte
+///////////////////////////////////////////////////////////////
 import React, { useContext, useEffect, useState } from 'react';
 import {
    StyleSheet,

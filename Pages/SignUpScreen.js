@@ -1,25 +1,11 @@
-/****** TODO 
-
-        Style the signup page
-    
-    []  Add KeyboardAvoidingView
-    []  Add Scrollview
-    []  Add show/hide password to password input
-    []  Make the email and password inputs flash red if the
-        requirements are not met     
-    []  Fix so it's not possible to press submit if the input 
-        fields are empty or does not meet the requirements  
-
-******/
-
 ////////////////////////////////////////////////////////////////
 //  Description: Security Patch
 //  Version: 1.0
 //  Author: Jack
-//  co-Author: userhonest
+//  co-Author: Gabriel
 ///////////////////////////////////////////////////////////////
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Appcontext } from '../lib/AppContext';
 import {
@@ -34,7 +20,10 @@ import {
 import designSystem from '../components/style/DesignSystem';
 import CustomButton from '../components/style/CustomButton';
 
-// navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
+/**
+ * @param {*} navigation prop is provided by StackNavigator inside App.js incase you need to route forward.
+ * @returns A Sign up "page" that allows user to create a new user for the app.
+ */
 export default function SignUpScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -53,6 +42,7 @@ export default function SignUpScreen({ navigation }) {
 
     const onPressSubmitHandler = () => {
         // TODO read response for status code
+        
         createUser({ email, userName, password });
         navigation.navigate('LoginScreen');
     };
@@ -90,20 +80,33 @@ export default function SignUpScreen({ navigation }) {
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1, backgroundColor: designSystem().COLOR.MUNCH_WHITE }}
+            style={{
+                flex: 1,
+                backgroundColor: designSystem().COLOR.MUNCH_WHITE,
+            }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={150}
         >
             <StatusBar hidden />
 
             <View style={designSystem().STYLING.container}>
-                <View style={designSystem().STYLING.signupPageTextInputContainer}>
-
-                    <View style={designSystem().STYLING.signupPageTextInputContainer}>
+                <View
+                    style={designSystem().STYLING.signupPageTextInputContainer}
+                >
+                    <View
+                        style={
+                            designSystem().STYLING.signupPageTextInputContainer
+                        }
+                    >
+                        {!emailContainsAT && email.length !== 0 && (
+                            <Text style={{ color: 'red' }}>
+                                Email should contain '@'.
+                            </Text>
+                        )}
                         <TextInput
                             placeholder="Email"
                             style={[
-                                designSystem().INPUT_FORM.input
+                                designSystem().INPUT_FORM.input,
                                 // ...STYLING.signupPageEmailInput,
                                 //
                                 // borderColor: isValidEmail
@@ -113,12 +116,6 @@ export default function SignUpScreen({ navigation }) {
                             value={email}
                             onChangeText={onChangeEmailHandler}
                         />
-                        {/* {!emailContainsAT && ( */}
-                        {/*     <Text style={{ color: 'red' }}> */}
-                        {/*         Email should contain '@'. */}
-                        {/*     </Text> */}
-                        {/* )} */}
-
 
                         <View
                             style={[
@@ -133,13 +130,17 @@ export default function SignUpScreen({ navigation }) {
                             <TextInput
                                 placeholder="Password"
                                 value={password}
-                                style={[designSystem().STYLING.passwordInput, { flex: 3 }]}
+                                style={[
+                                    designSystem().STYLING.passwordInput,
+                                    { flex: 3 },
+                                ]}
                                 onChangeText={onChangePasswordHandler}
                                 secureTextEntry={!showPassword}
                             />
                             <TouchableOpacity
                                 style={[
-                                    designSystem().STYLING.passwordIconContainer,
+                                    designSystem().STYLING
+                                        .passwordIconContainer,
                                     {
                                         alignSelf: 'center',
                                         justifyContent: 'center',
@@ -157,13 +158,13 @@ export default function SignUpScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
                         <CustomButton
-                            title={"Submit"}
+                            title={'Submit'}
                             onPress={onPressSubmitHandler}
                             style={[
                                 designSystem().STYLING.primaryButton,
                                 {
                                     width: '100%',
-                                }
+                                },
                             ]}
                         />
                     </View>

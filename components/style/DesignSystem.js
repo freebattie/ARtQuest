@@ -74,6 +74,8 @@ export default function designSystem() {
             borderWidth: 1,
             borderRadius: 0,
             marginBottom: 10,
+            fontFamily: 'Montserrat',
+            fontWeight: '700',
         },
     });
 

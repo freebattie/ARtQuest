@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////
+//  Description: Camera Screen
+//  Version: 1.0
+//  Author: Bjarte
+//  co-Author: Jack, Michael, Rolf, Rebekka
+///////////////////////////////////////////////////////////////
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect, useContext, useRef } from 'react';
 import {

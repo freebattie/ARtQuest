@@ -1,5 +1,9 @@
-// TODO fix KeyboardAvoidingView
-
+////////////////////////////////////////////////////////////////
+//  Description: Login screen
+//  Version: 1.0
+//  Author: Jack
+//  co-Author: Gabriel
+///////////////////////////////////////////////////////////////
 import React, { useContext, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////
+//  Description: Home screen
+//  Version: 1.0
+//  Author: Bjarte
+//  co-Author: Rolf, Rebekka, Jack, Michael, Gabriel
+///////////////////////////////////////////////////////////////
 import React, { useState } from 'react';
 import {
    StyleSheet,
