@@ -86,6 +86,24 @@ export default function designSystem() {
             alignItems: 'center',
             justifyContent: 'center',
         },
+        modal: {
+            height: '60%',
+            width: '70%',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 5,
+        },
+        modalPressed: {
+            backgroundColor: '#ccc',
+        },
+        image: {
+            borderColor: '#cce',
+            borderRadius: 5,
+            resizeMode: 'contain',
+            aspectRatio: 0.75,
+        },
     });
 
     const TEXT_STYLES = StyleSheet.create({

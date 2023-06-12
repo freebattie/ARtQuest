@@ -1,3 +1,11 @@
+/** #======================================================#
+*  #    Program or program file: GalleryImageView.js
+*  #    Description: View for displaying a single image in gallery
+*  #    Author: Michaël
+*  #    Date: 8. June 2023
+*  #    Version 1.0
+*  #======================================================#
+* */
 import React, { useContext } from 'react';
 import {
     Text,

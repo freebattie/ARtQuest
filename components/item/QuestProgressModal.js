@@ -1,11 +1,22 @@
+/** #======================================================#
+*  #    Program or program file : QuestProgressModal.js
+*  #    Description: Modal for displaying quest progression
+*  #    Author: Jack
+*  #    Date: 8. June 2023
+*  #    Version 1.0
+*  #======================================================#
+* */
+
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import designSystem from '../style/DesignSystem';
 
 /**
  *
- * @param {*} quest : object
- * @param {*} setShowQuestProgress : useState hook to control the state of showing this modal
+ * @param  quest: object[] - an array of objects containing quest information
+ * @param  activeItem : string - the name of the item that was scanned
+ * @param  setActiveItem : useState hook to control the state of the active item
+ * @param  setShowQuestProgress : useState hook to control the state of showing this modal
  * @returns a modal with object information
  */
 export default function QuestProgressItem({
@@ -35,11 +46,11 @@ export default function QuestProgressItem({
     return (
         <TouchableOpacity
             style={[
-                styles.container,
+                designSystem().CONTAINERS.modal,
                 {
                     backgroundColor: designSystem().COLOR.MUNCH_NAVY
                 },
-                isPressed ? styles.containerPressed : null,
+                isPressed ? designSystem().CONTAINERS.modalPressed : null,
             ]}
             activeOpacity={1}
             onPressIn={() => onPressInHandler()}
@@ -83,32 +94,12 @@ export default function QuestProgressItem({
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height: '60%',
-        width: '70%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 5,
-    },
-    containerPressed: {
-        backgroundColor: '#ccc',
-    },
     containerText: {
         flex: 1,
-        color: 'white',
+        color: designSystem().COLOR.MUNCH_WHITE,
     },
     containerTextPressed: {
         flex: 1,
-        color: 'black',
-    },
-    image: {
-        flex: 1,
-        borderColor: '#cce',
-        //borderWidth: 1,
-        borderRadius: 5,
-        resizeMode: 'contain',
-        aspectRatio: 0.75,
+        color: designSystem().COLOR.MUNCH_BLACK,
     },
 });
