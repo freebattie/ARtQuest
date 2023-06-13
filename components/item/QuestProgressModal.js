@@ -1,13 +1,13 @@
 /** #======================================================#
-*  #    Program or program file : QuestProgressModal.js
-*  #    Description: Modal for displaying quest progression
-*  #    Author: Jack
-*  #    Date: 8. June 2023
-*  #    Version 1.0
-*  #======================================================#
-* */
+ *  #    Program or program file : QuestProgressModal.js
+ *  #    Description: Modal for displaying quest progression
+ *  #    Author: Jack
+ *  #    Date: 8. June 2023
+ *  #    Version 1.0
+ *  #======================================================#
+ * */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import designSystem from '../style/DesignSystem';
 
@@ -26,71 +26,76 @@ export default function QuestProgressItem({
    setShowQuestProgress,
    image,
 }) {
-   const [isPressed, setIsPressed] = useState(false);
+    const [isPressed, setIsPressed] = useState(false);
+    const [size, setSize] = useState(0);
+    const [collected, setCollected] = useState([]);
+    useEffect(() => {
+        let quest = null;
+        quest = quests.get(activeItem);
+        if (quest) {
+            const { size, collected } = quest;
+            setCollected(collected);
+            setSize(size);
+        }
+    }, []);
 
-   const quest = quests.get(activeItem);
-   const { name, size, collected } = quest;
-   console.log(quest);
-   const onPressInHandler = () => {
-      setIsPressed(true);
-      console.log(isPressed);
-      // Remove display of object modal, *setter from parent*
-      //setShowQuestProgress(false);
-   };
-   const onPressOutHandler = () => {
-      setIsPressed(false);
-      setShowQuestProgress(false);
-      setActiveItem('N/A');
-      console.log(isPressed);
-   };
-   return (
-      <TouchableOpacity
-         style={[
-            designSystem().CONTAINERS.modal,
-            {
-               backgroundColor: designSystem().COLOR.MUNCH_NAVY
-            },
-            isPressed ? designSystem().CONTAINERS.modalPressed : null,
-         ]}
-         activeOpacity={1}
-         onPressIn={() => onPressInHandler()}
-         onPressOut={() => onPressOutHandler()}
-      >
-         <Image source={image['src']} style={designSystem().CONTAINERS.image} />
-         <Text
+    const onPressInHandler = () => {
+        setIsPressed(true);
+        console.log(isPressed);
+        // Remove display of object modal, *setter from parent*
+        setShowQuestProgress(false);
+        setActiveItem('N/A');
+    };
+    const onPressOutHandler = () => {
+        setActiveItem('N/A');
+        console.log(isPressed);
+        setIsPressed(false);
+        setShowQuestProgress(false);
+    };
+    return (
+        <TouchableOpacity
             style={[
-               designSystem().TEXT_STYLES.headline,
-               styles.containerText,
-               isPressed ? styles.containerTextPressed : null,
+                designSystem().CONTAINERS.modal,
+                {
+                    backgroundColor: designSystem().COLOR.MUNCH_NAVY,
+                },
+                isPressed ? designSystem().CONTAINERS.modalPressed : null,
             ]}
-         >
-            You found
-         </Text>
-         <Text
-            style={[
-               designSystem().TEXT_STYLES.headline,
-               styles.containerText,
-               isPressed ? styles.containerTextPressed : null,
-            ]}
-         >
-            an item!
-         </Text>
-         <Text style={[
-            designSystem().TEXT_STYLES.text,
-            styles.containerText
-         ]}>
-            {collected.length}/{size}
-         </Text>
-         <Text
-            style={[
-               designSystem().TEXT_STYLES.text,
-               styles.containerText
-            ]}
-         >
-            continue
-         </Text>
-      </TouchableOpacity>
-   );
+            activeOpacity={1}
+            onPressIn={() => onPressInHandler()}
+            onPressOut={() => onPressOutHandler()}
+        >
+            {isPressed && <Image source={image['src']} style={styles.image} />}
+            <Text
+                style={[
+                    designSystem().TEXT_STYLES.headline,
+                    styles.containerText,
+                    isPressed ? styles.containerTextPressed : null,
+                ]}
+            >
+                You found
+            </Text>
+            <Text
+                style={[
+                    designSystem().TEXT_STYLES.headline,
+                    styles.containerText,
+                    isPressed ? styles.containerTextPressed : null,
+                ]}
+            >
+                an item!
+            </Text>
+            <Text
+                style={[designSystem().TEXT_STYLES.text, styles.containerText]}
+            >
+                {collected.length}/{size}
+            </Text>
+            <Text
+                style={[designSystem().TEXT_STYLES.text, styles.containerText]}
+            >
+                continue
+            </Text>
+        </TouchableOpacity>
+    );
 }
 
 const styles = StyleSheet.create({

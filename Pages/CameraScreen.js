@@ -6,16 +6,9 @@
 ///////////////////////////////////////////////////////////////
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useState, useEffect, useContext, useRef } from 'react';
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    Image,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import QuestProgressItem from '../components/item/QuestProgressModal';
-
 
 /**
  * Camera screen is a "page" for application to scan QR codes.
@@ -145,10 +138,7 @@ export default function CameraScreen() {
     };
 
     // The initial scan of the QR code to verify and validate if it's a valid quest object
-    const handleBarCodeScanned = async ({
-        data,
-        bounds,
-    }) => {
+    const handleBarCodeScanned = async ({ data, bounds }) => {
         setImageX(bounds['origin'].x);
         setImageY(bounds['origin'].y);
         setImageHeight(bounds['size'].height);
@@ -191,7 +181,6 @@ export default function CameraScreen() {
                 setActiveQuest('');
             }
         }
-
     };
 
     const scannedImage = allItemsFromAssets.find(
@@ -214,9 +203,7 @@ export default function CameraScreen() {
         return <Text>Permission denied</Text>;
     }
 
-
     const pickedUpItem = async () => {
-
         try {
             let serverData;
             try {
@@ -243,17 +230,17 @@ export default function CameraScreen() {
         setShowQuestProgress(true);
     };
     return (
-        <View style={[
-            // designSystem().CONTAINERS.container,
-            styles.container,
-        ]}>
+        <View
+            style={[
+                // designSystem().CONTAINERS.container,
+                styles.container,
+            ]}
+        >
             <BarCodeScanner
                 onBarCodeScanned={
                     scanned ? handelUpdateImageLocation : handleBarCodeScanned
                 }
-                style={
-                    StyleSheet.absoluteFillObject
-                }
+                style={StyleSheet.absoluteFillObject}
             />
             <TouchableOpacity
                 onLayout={onLayout}
