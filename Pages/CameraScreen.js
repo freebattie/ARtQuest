@@ -52,8 +52,12 @@ export default function CameraScreen() {
             name: 'cheese',
         },
         {
-            src: require('../assets/images/scream.png'),
-            name: 'scream',
+            src: require('../assets/images/scream_item_1.png'),
+            name: 'scream_item',
+        },
+        {
+            src: require('../assets/images/sock_item.png'),
+            name: 'sock_item',
         },
     ]);
 
@@ -81,9 +85,9 @@ export default function CameraScreen() {
 
         for (const item of data) {
             if (item.quest == 1) {
-                serverQuestItem.set('scream', item);
+                serverQuestItem.set('scream_item', item);
             } else if (item.quest == 2) {
-                serverQuestItem.set('rocks', item);
+                serverQuestItem.set('sock_item', item);
             }
         }
         setQuests(serverQuestItem);
@@ -118,7 +122,7 @@ export default function CameraScreen() {
         }
         if (foundObject) {
             setActiveItem(foundObject.name);
-            setActiveItemId(foundObject.item);
+            setActiveItemId(foundObject.id);
             setActiveQuest(foundObject.quest);
 
             let currentQuests = new Map(quests);
@@ -126,7 +130,7 @@ export default function CameraScreen() {
             } else {
                 let quest = currentQuests.get(foundObject.name);
                 let found = quest.collected.find((item) => {
-                    return item == foundObject.item;
+                    return item == foundObject.id;
                 });
                 if (found) {
                     console.log('got here');
@@ -147,6 +151,7 @@ export default function CameraScreen() {
         let foundObject = null;
         try {
             foundObject = await JSON.parse(data);
+            console.log(foundObject);
         } catch (error) {
             console.log('scanned Wrong item ', error);
         }
@@ -156,7 +161,7 @@ export default function CameraScreen() {
         ////////////////////////////////////////////////////
         if (foundObject) {
             setActiveItem(foundObject.name);
-            setActiveItemId(foundObject.item);
+            setActiveItemId(foundObject.id);
             setActiveQuest(foundObject.quest);
         } else {
             setScanned(false);
@@ -171,7 +176,7 @@ export default function CameraScreen() {
         } else {
             let quest = currentQuests.get(foundObject.name);
             let found = quest.collected.find((item) => {
-                return item == foundObject.item;
+                return item == foundObject.id;
             });
             if (found) {
                 setActiveItem('N/A');
@@ -187,7 +192,7 @@ export default function CameraScreen() {
         (item) => item.name == activeItem
     );
 
-    console.log("scannedImage is ", scannedImage);
+    console.log('scannedImage is ', scannedImage);
 
     if (loading) {
         return <Text>LOADINNG FROM SERVER</Text>;
