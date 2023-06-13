@@ -42,18 +42,22 @@ export default function CameraScreen() {
     /**
      * Hardcoded Values for images
      */
-    const [allItemsFromAssets, doNotUse] = useState([
+    const [allItemsFromAssets, _] = useState([
         {
-            src: require('../assets/images/rocks.png'),
-            name: 'rocks',
+            src: require('../assets/images/bratli/bratli_item_1'),
+            name: 'bratli_item_1',
         },
         {
-            src: require('../assets/images/cheese.png'),
-            name: 'cheese',
+            src: require('../assets/images/bratli/bratli_item_2'),
+            name: 'bratli_item_2',
         },
         {
-            src: require('../assets/images/scream.png'),
-            name: 'scream',
+            src: require('../assets/images/scream/scream_item_1'),
+            name: 'scream_item_1',
+        },
+        {
+            src: require('../assets/images/scream/scream_item_2'),
+            name: 'scream_item_2',
         },
     ]);
 
@@ -80,11 +84,17 @@ export default function CameraScreen() {
         const serverQuestItem = new Map();
 
         for (const item of data) {
-            if (item.quest == 1) {
-                serverQuestItem.set('scream', item);
-            } else if (item.quest == 2) {
-                serverQuestItem.set('rocks', item);
+            switch (item.quest) {
+                case 1:
+                    serverQuestItem.set('scream', item);
+                case 2:
+                    serverQuestItem.set('bratli', item);
             }
+            // if (item.quest == 1) {
+            //     serverQuestItem.set('scream', item);
+            // } else if (item.quest == 2) {
+            //     serverQuestItem.set('rocks', item);
+            // }
         }
         setQuests(serverQuestItem);
     };
