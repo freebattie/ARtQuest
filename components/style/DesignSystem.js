@@ -103,6 +103,7 @@ export default function designSystem() {
             borderRadius: 5,
             resizeMode: 'contain',
             aspectRatio: 0.75,
+            height: '40%',
         },
     });
 

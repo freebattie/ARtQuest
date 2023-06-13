@@ -20,11 +20,11 @@ import designSystem from '../style/DesignSystem';
  * @returns a modal with object information
  */
 export default function QuestProgressItem({
-    quests,
-    activeItem,
-    setActiveItem,
-    setShowQuestProgress,
-    image,
+   quests,
+   activeItem,
+   setActiveItem,
+   setShowQuestProgress,
+   image,
 }) {
     const [isPressed, setIsPressed] = useState(false);
     const [size, setSize] = useState(0);
@@ -99,12 +99,12 @@ export default function QuestProgressItem({
 }
 
 const styles = StyleSheet.create({
-    containerText: {
-        flex: 1,
-        color: designSystem().COLOR.MUNCH_WHITE,
-    },
-    containerTextPressed: {
-        flex: 1,
-        color: designSystem().COLOR.MUNCH_BLACK,
-    },
+   containerText: {
+      flex: 1,
+      color: designSystem().COLOR.MUNCH_WHITE,
+   },
+   containerTextPressed: {
+      flex: 1,
+      color: designSystem().COLOR.MUNCH_BLACK,
+   },
 });

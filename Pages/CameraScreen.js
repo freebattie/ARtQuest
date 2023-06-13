@@ -23,7 +23,6 @@ export default function CameraScreen() {
 
     const { sendItem, getAllQuest } = useContext(Appcontext);
     const [quests, setQuests] = useState(new Map());
-    const [reward, setReward] = useState(false);
     const [showQuestProgress, setShowQuestProgress] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showReward, setShowReward] = useState(false);
@@ -33,8 +32,6 @@ export default function CameraScreen() {
     const [imageYOffset, setImageYOffset] = useState(0);
     const [imageHeight, setImageHeight] = useState(0);
     const [imageWidth, setImageWidth] = useState(0);
-    const textContainerRef = useRef < View > null;
-    const textRef = useRef < Text > null;
 
     // Finding the parent offset view that is a container for the image display.
     // The offset is an absolute position within the container.
@@ -189,6 +186,8 @@ export default function CameraScreen() {
     const scannedImage = allItemsFromAssets.find(
         (item) => item.name == activeItem
     );
+
+    console.log("scannedImage is ", scannedImage);
 
     if (loading) {
         return <Text>LOADINNG FROM SERVER</Text>;
