@@ -44,19 +44,19 @@ export default function CameraScreen() {
      */
     const [allItemsFromAssets, _] = useState([
         {
-            src: require('../assets/images/bratli/bratli_item_1'),
+            src: require('../assets/images/bratli/bratli_item_1.png'),
             name: 'bratli_item_1',
         },
         {
-            src: require('../assets/images/bratli/bratli_item_2'),
+            src: require('../assets/images/bratli/bratli_item_2.png'),
             name: 'bratli_item_2',
         },
         {
-            src: require('../assets/images/scream/scream_item_1'),
+            src: require('../assets/images/scream/scream_item_1.png'),
             name: 'scream_item_1',
         },
         {
-            src: require('../assets/images/scream/scream_item_2'),
+            src: require('../assets/images/scream/scream_item_2.png'),
             name: 'scream_item_2',
         },
     ]);
