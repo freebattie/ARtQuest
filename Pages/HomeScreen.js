@@ -41,7 +41,8 @@ export default function HomeScreen({ navigation }) {
             <View style={[
                {
                   flexDirection: 'column',
-                  paddingBottom: '15%'
+                  paddingBottom: '15%',
+                  margin: 35,
                }
             ]}>
                <Text
