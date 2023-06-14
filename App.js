@@ -58,8 +58,14 @@ export default function App() {
  */
 function RootNavigator({ options }) {
     return (
-        <Stack.Navigator headerShown={false} screenOptions={options}>
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Navigator
+            headerShown={false}
+            screenOptions={options}
+        >
+            <Stack.Screen
+                name="LoginScreen"
+                component={LoginScreen}
+            />
             <Stack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
