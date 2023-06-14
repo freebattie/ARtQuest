@@ -4,8 +4,8 @@
 //  Author: Jack
 //  co-Author: Gabriel
 ///////////////////////////////////////////////////////////////
-import React, { useContext, useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, {useContext, useState} from 'react';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {
     StyleSheet,
@@ -18,22 +18,22 @@ import {
     KeyboardAvoidingView,
 } from 'react-native';
 import designSystem from '../components/style/DesignSystem';
-import { Appcontext } from '../lib/AppContext';
+import {Appcontext} from '../lib/AppContext';
 import CustomButton from '../components/style/CustomButton';
 import DashedLine from '../components/style/DashedLine';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const { COLOR } = designSystem();
+const {COLOR} = designSystem();
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('test@test.no');
     const [password, setPassword] = useState('test');
-    const { login } = useContext(Appcontext);
+    const {login} = useContext(Appcontext);
     const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async () => {
         try {
-            await login({ email: email, password });
+            await login({email: email, password});
             navigation.navigate('HomeScreen');
         } catch (error) {
             console.log('handelLogin', error);
@@ -117,7 +117,7 @@ export default function LoginScreen({ navigation }) {
                 <TextInput
                     placeholder="Password"
                     value={password}
-                    style={[STYLING.passwordInput, { flex: 3 }]}
+                    style={[STYLING.passwordInput, {flex: 3}]}
                     onChangeText={(password) => setPassword(password)}
                     secureTextEntry={!showPassword}
                 />
@@ -140,6 +140,7 @@ export default function LoginScreen({ navigation }) {
                     />
                 </TouchableOpacity>
             </View>
+
             <CustomButton
                 title={'Login'}
                 onPress={handleLogin}
@@ -149,52 +150,52 @@ export default function LoginScreen({ navigation }) {
                 ]}
             />
 
- <View style={{ flexDirection: 'row' }}>
-        <DashedLine />
-                 <Text>or</Text>
-                 <DashedLine />
-              </View>
+            <View style={{flexDirection: 'row', margin: 10}}>
+                <DashedLine/>
+                <Text>or</Text>
+                <DashedLine/>
+            </View>
 
-              <View>
-              <TouchableOpacity
-                style={{
-                   flexDirection: 'row',
-                   justifyContent: 'space-evenly',
-                   alignItems: 'center',
-                   width: 250,
-                   height: 50,
-                   borderColor: 'red',
-                   borderStyle: 'solid',
-                   borderWidth: 0,
-                }}
-             >
-                <Image
-                   style={STYLING.icon}
-                   source={require('../assets/icons/facebook.png')}
-                />
-                <Image
-                   style={STYLING.icon}
-                   source={require('../assets/icons/google.png')}
-                />
-                <Image
-                   style={STYLING.icon}
-                   source={require('../assets/icons/instagram.png')}
-                />
-                <Image
-                   style={STYLING.icon}
-                   source={require('../assets/icons/apple.png')}
-                />
-             </TouchableOpacity>
-             </View>
-
-              <View style={{ flexDirection: 'row', margin: 20 }}>
-               <Text>Don't have an account?</Text>
-                <TouchableOpacity onPress={() => handleCreateUser()}>
-                   <Text style={{ marginLeft: 10, color: COLOR.MUNCH_RED }}>
-                      Sign up
-                   </Text>
+            <View style={{flexDirection: 'row', justifyContent: 'center', margin: 25}}>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        width: 250,
+                        height: 50,
+                        borderColor: 'red',
+                        borderStyle: 'solid',
+                        borderWidth: 0,
+                    }}
+                >
+                    <Image
+                        style={STYLING.icon}
+                        source={require('../assets/icons/facebook.png')}
+                    />
+                    <Image
+                        style={STYLING.icon}
+                        source={require('../assets/icons/google.png')}
+                    />
+                    <Image
+                        style={STYLING.icon}
+                        source={require('../assets/icons/instagram.png')}
+                    />
+                    <Image
+                        style={STYLING.icon}
+                        source={require('../assets/icons/apple.png')}
+                    />
                 </TouchableOpacity>
-             </View>
+            </View>
+
+            <View style={{flexDirection: 'row', justifyContent: 'center',margin: 25}}>
+                <Text>Don't have an account?</Text>
+                <TouchableOpacity onPress={() => handleCreateUser()}>
+                    <Text style={{marginLeft: 10, color: COLOR.MUNCH_RED}}>
+                        Sign up
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
         </View>
     );
