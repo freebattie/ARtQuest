@@ -145,7 +145,6 @@ export default function designSystem() {
 
         primaryButton: {
 
-            maxWidth: '100%',
             backgroundColor: COLOR.MUNCH_RED,
             paddingHorizontal: 20,
             paddingVertical: 5,
@@ -156,6 +155,8 @@ export default function designSystem() {
             fontSize: 22,
             fontWeight: 'bold',
             textAlign: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
 
         /***********************

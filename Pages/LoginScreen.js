@@ -146,7 +146,6 @@ export default function LoginScreen({navigation}) {
                 onPress={handleLogin}
                 style={[
                     designSystem().STYLING.primaryButton,
-                    designSystem().STYLING.primaryButtonText,
                 ]}
             />
 

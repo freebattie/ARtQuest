@@ -14,8 +14,8 @@ export default function CustomButton({ title, onPress, style }) {
         style = [STYLING.primaryButton]
     }
     return (
-        <TouchableOpacity activeOpacity={0.4} style={[style]} onPress={onPress}>
-            <Text style={[STYLING.primaryButton, style]}>
+        <TouchableOpacity activeOpacity={0.85} style={[style]} onPress={onPress}>
+            <Text style={[STYLING.primaryButton, style, {backgroundColor: 'transparent'}]}>
                 {title}
             </Text>
         </TouchableOpacity>
