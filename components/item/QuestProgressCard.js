@@ -1,12 +1,12 @@
 /** #======================================================#
-*  #    Program or program file: QuestProgressCard.js
-*  #    Description: Card view for quest progression
-*  #    Author: Jack
-*  #    Co-author: Bjarte
-*  #    Date: 8. June 2023
-*  #    Version 1.0
-*  #======================================================#
-* */
+ *  #    Program or program file: QuestProgressCard.js
+ *  #    Description: Card view for quest progression
+ *  #    Author: Jack
+ *  #    Co-author: Bjarte
+ *  #    Date: 8. June 2023
+ *  #    Version 1.0
+ *  #======================================================#
+ * */
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
@@ -25,15 +25,21 @@ export default function QuestProgressCard({
     size,
     collected,
     children,
+    quest,
 }) {
     // Dynamic image
     const image = 'scream';
 
     const [complete, setComplete] = useState(false);
-
+    const [activeImage, setactiveImage] = useState();
     useEffect(() => {
         if (collected == size) {
             setComplete(true);
+        }
+        if (quest == 1) {
+            setactiveImage(require(`../../assets/images/skrik-high.jpg`));
+        } else {
+            setactiveImage(require(`../../assets/images/sock_item.png`));
         }
     }, [complete]);
 
@@ -68,11 +74,7 @@ export default function QuestProgressCard({
                 >
                     {collected ? collected : 0}/{size ? size : 0}
                 </Text>
-                <Image
-                    source={require(`../../assets/images/${image ? image : 'question'
-                        }.png`)}
-                    style={styles.image}
-                />
+                <Image source={activeImage} style={styles.image} />
             </View>
             {React.Children.map(children, (child) => {
                 if (React.isValidElement(child)) {
@@ -141,5 +143,6 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: '75%',
         height: '75%',
+        backgroundColor: 'lightgray',
     },
 });
