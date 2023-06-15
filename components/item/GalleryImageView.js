@@ -1,17 +1,13 @@
 /** #======================================================#
-*  #    Program or program file: GalleryImageView.js
-*  #    Description: View for displaying a single image in gallery
-*  #    Author: Michaël
-*  #    Date: 8. June 2023
-*  #    Version 1.0
-*  #======================================================#
-* */
-import React, { useContext } from 'react';
-import {
-    Text,
-    Image,
-    Pressable,
-} from 'react-native';
+ *  #    Program or program file: GalleryImageView.js
+ *  #    Description: View for displaying a single image in gallery
+ *  #    Author: Michaël
+ *  #    Date: 8. June 2023
+ *  #    Version 1.0
+ *  #======================================================#
+ * */
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, Image, Pressable } from 'react-native';
 import { Appcontext } from '../../lib/AppContext';
 
 /**
@@ -19,15 +15,19 @@ import { Appcontext } from '../../lib/AppContext';
  * @param reward - the obj containing info on picture
  * @param onNavigate - used to navigate to next page
  */
-export default function GalleryImageView({ reward, onNavigate }) {
+export default function GalleryImageView({ reward, onSelectImage }) {
     const { getImageByName } = useContext(Appcontext);
+    const [activeImage, setActiveImage] = useState('');
     console.log('GalleryImageView');
-    const image = getImageByName(reward.filename);
 
+    useEffect(() => {
+        const image = getImageByName(reward.filename);
+        setActiveImage(image);
+    }, []);
     return (
-        <Pressable onPress={() => onNavigate()}>
+        <Pressable onPress={() => onSelectImage(reward)}>
             <Image
-                source={image}
+                source={activeImage}
                 style={{
                     width: '100%',
                     height: undefined,

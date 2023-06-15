@@ -5,13 +5,7 @@
 //  co-Author: Bjarte
 ///////////////////////////////////////////////////////////////
 import React, { useContext, useEffect, useState } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Image,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { Appcontext } from '../lib/AppContext';
 import GalleryImageView from '../components/item/GalleryImageView';
 import designSystem from '../components/style/DesignSystem';
@@ -28,15 +22,20 @@ export default function Collections({ navigation }) {
     const [loading, setLoading] = useState(true);
     const [selectedReward, setSelectedReward] = useState({});
     const [isSelected, setIsSelected] = useState(false);
+    const [selectedImage, setselectedImage] = useState();
 
     // Functions
     /**
      * get all Pictures user has collected
      */
     const getUserRewards = async () => {
-        const data = await getAllUserRewards();
-        setLoading(false);
-        setRewardsArray(data);
+        try {
+            const data = await getAllUserRewards();
+            setLoading(false);
+            setRewardsArray(data);
+        } catch (error) {
+            console.log('error', error);
+        }
     };
 
     /**
@@ -46,10 +45,11 @@ export default function Collections({ navigation }) {
      */
     const selectImage = (reward) => {
         console.log('Selected: ', reward);
-        return () => {
-            setSelectedReward(reward);
-            setIsSelected(true);
-        };
+        setSelectedReward(reward);
+        console.log();
+        const image = getImageByName(reward.filename);
+        setselectedImage(image);
+        setIsSelected(true);
     };
 
     useEffect(() => {
@@ -57,7 +57,6 @@ export default function Collections({ navigation }) {
     }, []);
 
     if (isSelected) {
-        const image = getImageByName(selectedReward.filename);
         console.log('I am ', selectedReward.picturetitle);
         console.log('My histoy is ', selectedReward.picturedescription);
         return (
@@ -84,7 +83,7 @@ export default function Collections({ navigation }) {
                                 aspectRatio: 1,
                             },
                         ]}
-                        source={image}
+                        source={selectedImage}
                     />
                     <Text
                         style={[
@@ -98,35 +97,6 @@ export default function Collections({ navigation }) {
                         Lorem ipsum dolor sit amet, qui minim labore adipisicing
                         minim sint cillum sint consectetur cupidatat. Lorem
                         ipsum dolor sit amet, qui minim labore adipisicing minim
-                        sint cillum sint consectetur cupidatat. Lorem ipsum
-                        dolor sit amet, qui minim labore adipisicing minim sint
-                        cillum sint consectetur cupidatat. Lorem ipsum dolor sit
-                        amet, qui minim labore adipisicing minim sint cillum
-                        sint consectetur cupidatat. Lorem ipsum dolor sit amet,
-                        qui minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat. Lorem ipsum dolor sit amet, qui
-                        minim labore adipisicing minim sint cillum sint
-                        consectetur cupidatat.
                     </Text>
                 </ScrollView>
                 <CustomButton
@@ -175,7 +145,7 @@ export default function Collections({ navigation }) {
                         <GalleryImageView
                             key={index}
                             reward={reward}
-                            onNavigate={selectImage(reward)}
+                            onSelectImage={selectImage}
                             style={[
                                 {
                                     flex: 1,
