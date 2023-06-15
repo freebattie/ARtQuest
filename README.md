@@ -21,3 +21,6 @@ The project requires the following to be installed:
 8. You should now see a login page, either login with the test user (username: test@test.no, password: test), or create a user and login with it
 9. If everything works you should now be on the home page of the app
 
+## NOTE:
+> if you run the project localy, make sure both run on the same router  
+> (We had issues connecting between frontend and backend when testing on our school network)
